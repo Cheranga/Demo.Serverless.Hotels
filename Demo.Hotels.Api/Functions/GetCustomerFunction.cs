@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Demo.Hotels.Api.Application;
 using Demo.Hotels.Api.DTO.Requests;
 using Demo.Hotels.Api.DTO.Responses;
@@ -33,13 +34,19 @@ namespace Demo.Hotels.Api.Functions
         public async Task<IActionResult> GetCustomer(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api/customers/{customerId}")] HttpRequest req, string customerId)
         {
-            var customerResponse = await _customerService.GetCustomer(new GetCustomerRequest
+            var getCustomerOperation = await _customerService.GetCustomer(new GetCustomerRequest
             {
                 CustomerId = customerId,
                 CorrelationId = Guid.NewGuid().ToString("N")
             });
 
-            return new OkObjectResult(customerResponse);
+            if (!getCustomerOperation.Status)
+            {
+                // TODO: return a proper response based on the error code
+                return new InternalServerErrorResult();
+            }
+
+            return new OkObjectResult(getCustomerOperation.Data);
         }
     }
 }
