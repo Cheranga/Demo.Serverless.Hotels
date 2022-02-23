@@ -3,10 +3,17 @@ parameters:
 
 steps:
 
+- task: UseDotNet@2
+  displayName: 'Installing .NET SDK 6.x'
+  inputs:
+    packageType: 'sdk'    
+    version: '6.0.x'
+    includePreviewVersions: true
+
 - task: DotNetCoreCLI@2
   displayName: Build and Restore
   inputs:
-    command: 'build'
+    command: 'build'    
     projects: |
       ${{parameters.projectFiles}}
     arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
