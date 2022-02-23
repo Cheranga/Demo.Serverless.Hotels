@@ -7,9 +7,12 @@ param keyVaultName string
 @description('Storage account name')
 param sgName string
 
+param sharedStorageAccount string
+
 var storageAccountConnectionStringSecret = '@Microsoft.KeyVault(SecretUri=https://${keyVaultName}.vault.azure.net/secrets/storageAccountConnectionString/)'
 var appInsightsKeySecret = '@Microsoft.KeyVault(SecretUri=https://${keyVaultName}.vault.azure.net/secrets/appInsightsKey/)'
 var timeZone = 'AUS Eastern Standard Time'
+var queue = 'https://${sharedStorageAccount}.queue.core.windows.net'
 
 resource productionSlotAppSettings 'Microsoft.Web/sites/config@2021-02-01' = {
   name: '${functionAppName}/appsettings'
@@ -31,6 +34,7 @@ resource stagingSlotAppSettings 'Microsoft.Web/sites/slots/config@2021-02-01'= {
   properties:{
     CustomerApiKey: 'This is the staging setting'  
     AzureWebJobsStorage__accountName: sgName
+    Hotel_queueServiceUri: queue
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: storageAccountConnectionStringSecret
     WEBSITE_CONTENTSHARE: toLower(functionAppName)
     FUNCTIONS_EXTENSION_VERSION: '~3'

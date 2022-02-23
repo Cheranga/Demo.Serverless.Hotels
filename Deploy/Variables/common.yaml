@@ -23,4 +23,6 @@ variables:
   - name: planTier
     value: Dynamic
   - name: commonRgName
-    value: rg-cc-platform  
+    value: rg-cc-platform
+  - name: sharedStorageAccount
+    value: sgccplatformdemo      

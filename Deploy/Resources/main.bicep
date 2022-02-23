@@ -31,6 +31,8 @@ param planSku string
 @description('Application service plan tier')
 param planTier string
 
+param sharedStorageAccount string
+
 var appInsName = 'ins-${functionAppName}-${environmentName}'
 
 param location string = resourceGroup().location
@@ -94,6 +96,7 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
     functionAppName: 'fn-${functionAppName}-${environmentName}'
     keyVaultName: 'kv-${functionAppName}-${environmentName}'
     sgName: sgName    
+    sharedStorageAccount:sharedStorageAccount
   }
   dependsOn: [
     storageAccountModule
