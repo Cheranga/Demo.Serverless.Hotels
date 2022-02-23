@@ -19,11 +19,22 @@ namespace Demo.Hotels.Api
             var configuration = GetConfiguration(builder);
             var services = builder.Services;
 
+            RegisterConfigurations(services, configuration);
             RegisterServices(services);
-            RegisterAuthClients(configuration, services);
+            RegisterAuthClients(services, configuration);
         }
 
-        private void RegisterAuthClients(IConfigurationRoot configuration, IServiceCollection services)
+        private void RegisterConfigurations(IServiceCollection services, IConfigurationRoot configuration)
+        {
+            services.Configure<HotelConfig>(configuration.GetSection(nameof(HotelConfig)));
+            services.AddSingleton(provider =>
+            {
+                var config = provider.GetRequiredService<IOptionsSnapshot<HotelConfig>>().Value;
+                return config;
+            });
+        }
+
+        private void RegisterAuthClients(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddAzureClients(builder =>
             {
