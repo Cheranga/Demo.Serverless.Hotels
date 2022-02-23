@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "45979a34-04e6-467b-8575-f29e2e20adc5": {
+      "ProjectGuid": "45979a34-04e6-467b-8575-f29e2e20adc5",
+      "DisplayName": "Demo.Hotels.Api",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
