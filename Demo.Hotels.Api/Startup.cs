@@ -30,8 +30,6 @@ namespace Demo.Hotels.Api
                 builder.AddQueueServiceClient(configuration.GetSection(nameof(HotelConfig))).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = true,
-                    ExcludeVisualStudioCredential = true,
-                    ExcludeVisualStudioCodeCredential = true,
                     ExcludeAzurePowerShellCredential = true,
                     ExcludeInteractiveBrowserCredential = true
                 }));

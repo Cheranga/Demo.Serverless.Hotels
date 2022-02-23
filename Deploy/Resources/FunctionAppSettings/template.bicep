@@ -35,7 +35,7 @@ resource stagingSlotAppSettings 'Microsoft.Web/sites/slots/config@2021-02-01'= {
     CustomerApiKey: 'This is the staging setting'  
     AzureWebJobsStorage__accountName: sgName
     HotelConfig__CancellationQueue: 'hotel-cancellations'
-    Hotel_queueServiceUri: queue
+    Hotel__queueServiceUri: queue
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: storageAccountConnectionStringSecret
     WEBSITE_CONTENTSHARE: toLower(functionAppName)
     FUNCTIONS_EXTENSION_VERSION: '~3'
