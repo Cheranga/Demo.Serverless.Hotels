@@ -31,7 +31,9 @@ namespace Demo.Hotels.Api
                 {
                     ExcludeEnvironmentCredential = true,
                     ExcludeAzurePowerShellCredential = true,
-                    ExcludeInteractiveBrowserCredential = true
+                    ExcludeInteractiveBrowserCredential = true,
+                    ExcludeVisualStudioCredential = false,
+                    ExcludeManagedIdentityCredential = false
                 }));
             });
         }
