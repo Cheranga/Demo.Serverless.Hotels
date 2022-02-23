@@ -28,3 +28,24 @@ steps:
           Remove-AzResourceGroupDeployment -ResourceGroupName $(rgName) -Name $deployment.DeploymentName
           Write-Host 'Removed Deployment: ' $deployment.DeploymentName 
         } 
+
+  - task: AzureCLI@2    
+    displayName: "Provision resources"
+    inputs:
+      azureSubscription: "$(azureSubscription)"
+      scriptType: "pscore"
+      scriptLocation: "inlineScript"
+      inlineScript: |    
+        az deployment group create `
+        --name $(Build.BuildNumber)-$(funcAppName) `
+        --resource-group "$(rgName)" `
+        --template-file "$(Pipeline.Workspace)/deploy/main.bicep" `
+        --parameters "buildNumber=$(Build.BuildNumber)" `
+        "sgName=$(sgName)" `
+        "storageSku=$(sgType)" `
+        "storageSkuTier=$(sgTier)" `
+        "functionAppName=$(funcAppName)" `
+        "environmentName=$(environmentName)" `
+        "aspName=$(planName)" `
+        "planSku=$(planSku)" `
+        "planTier=$(planTier)" `
