@@ -48,4 +48,4 @@ steps:
         "environmentName=$(environmentName)" `
         "aspName=$(planName)" `
         "planSku=$(planSku)" `
-        "planTier=$(planTier)" `
+        "planTier=$(planTier)"
