@@ -18,7 +18,7 @@ resource productionSlotAppSettings 'Microsoft.Web/sites/config@2021-02-01' = {
     AzureWebJobsStorage__accountName: sgName
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: storageAccountConnectionStringSecret
     WEBSITE_CONTENTSHARE: toLower(functionAppName)
-    FUNCTIONS_EXTENSION_VERSION: '~3'
+    FUNCTIONS_EXTENSION_VERSION: '~4'
     APPINSIGHTS_INSTRUMENTATIONKEY: appInsightsKeySecret
     FUNCTIONS_WORKER_RUNTIME: 'dotnet'
     WEBSITE_TIME_ZONE: timeZone
