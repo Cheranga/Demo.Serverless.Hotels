@@ -20,10 +20,10 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    command: 'build --no-restore'    
+    command: 'build'    
     projects: |
       ${{parameters.projectFiles}}
-    arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
+    arguments: --no-restore --configuration Release --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
 - task: DotNetCoreCLI@2
   displayName: Test
