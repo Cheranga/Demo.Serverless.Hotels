@@ -11,9 +11,16 @@ steps:
     includePreviewVersions: true
 
 - task: DotNetCoreCLI@2
-  displayName: Build and Restore
+  displayName: Restore
   inputs:
-    command: 'build'    
+    command: 'restore'    
+    projects: |
+      ${{parameters.projectFiles}}
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build --no-restore'    
     projects: |
       ${{parameters.projectFiles}}
     arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
