@@ -1,7 +1,6 @@
 ﻿using Azure.Identity;
 using Demo.Hotels.Api;
 using Demo.Hotels.Api.Application;
-using Demo.Hotels.Api.Configs;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Azure;
@@ -26,19 +25,13 @@ namespace Demo.Hotels.Api
 
         private void RegisterConfigurations(IServiceCollection services, IConfigurationRoot configuration)
         {
-            services.Configure<HotelConfig>(configuration.GetSection(nameof(HotelConfig)));
-            services.AddSingleton(provider =>
-            {
-                var config = provider.GetRequiredService<IOptionsSnapshot<HotelConfig>>().Value;
-                return config;
-            });
         }
 
         private void RegisterAuthClients(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddAzureClients(builder =>
             {
-                builder.AddQueueServiceClient(configuration.GetSection(nameof(HotelConfig))).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                builder.AddQueueServiceClient(configuration.GetSection("QueueSource")).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = true,
                     ExcludeAzurePowerShellCredential = true,

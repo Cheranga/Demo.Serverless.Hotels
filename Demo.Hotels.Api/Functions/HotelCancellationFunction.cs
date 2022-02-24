@@ -1,7 +1,4 @@
-using System;
-using Demo.Hotels.Api.Configs;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
 namespace Demo.Hotels.Api.Functions
@@ -16,7 +13,7 @@ namespace Demo.Hotels.Api.Functions
         }
         
         [FunctionName("HotelCancellationFunction")]
-        public void Run([QueueTrigger("CancellationQueue", Connection = "HotelConfig")]string myQueueItem, ILogger log)
+        public void Run([QueueTrigger("%HotelCancellationQueue%", Connection = "QueueSource")]string myQueueItem, ILogger log)
         {
             _logger.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
         }
