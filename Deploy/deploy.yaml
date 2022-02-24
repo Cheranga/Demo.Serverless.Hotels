@@ -60,6 +60,10 @@ steps:
       inlineScript: |                        
         $funcAppDeployment = "${{parameters.buildNumber}}"+"-functionapp"
         
+        $test = Get-AzResource -ResourceId /subscriptions/5f573272-0745-4849-b87d-b3161cb3088d/resourceGroups/rg-cc-platform/providers/Microsoft.Storage/storageAccounts/sgccplatformdemo
+        echo $test
+        echo $test.ResourceId
+
         $storageAccountDeployment = "${{parameters.buildNumber}}"+"-storageaccount"
         $storageAccountResourceId=$(az deployment group show -g "$(rgName)" -n "$storageAccountDeployment" --query properties.outputs.subsResourceId.value)        
         $productionSlotPrincipalId=$(az deployment group show -g "$(rgName)" -n "$funcAppDeployment" --query properties.outputs.productionPrincipalId.value)
