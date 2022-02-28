@@ -26,3 +26,5 @@ variables:
     value: rg-cc-platform
   - name: sharedStorageAccount
     value: sgccplatformdemo      
+  - name: sharedStorageAccountResourceId
+    value: "/subscriptions/$(subscriptionId)/resourceGroups/$(commonRgName)/providers/Microsoft.Storage/storageAccounts/$(sharedStorageAccount)"

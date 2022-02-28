@@ -49,7 +49,7 @@ steps:
         "aspName=$(planName)" `
         "planSku=$(planSku)" `
         "planTier=$(planTier) "`
-        "sharedStorageAccount=$(sgName)"
+        "sharedStorageAccount=$(sharedStorageAccount)"
 
   - task: AzureCLI@2
     displayName: "Setting RBAC"
@@ -59,16 +59,16 @@ steps:
       scriptLocation: "inlineScript"
       inlineScript: |                        
         $funcAppDeployment = "${{parameters.buildNumber}}"+"-functionapp"
-        
         $storageAccountDeployment = "${{parameters.buildNumber}}"+"-storageaccount"
+
         $storageAccountResourceId=$(az deployment group show -g "$(rgName)" -n "$storageAccountDeployment" --query properties.outputs.subsResourceId.value)        
         $productionSlotPrincipalId=$(az deployment group show -g "$(rgName)" -n "$funcAppDeployment" --query properties.outputs.productionPrincipalId.value)
         $stagingSlotPrincipalId=$(az deployment group show -g "$(rgName)" -n "$funcAppDeployment" --query properties.outputs.stagingPrincipalId.value)
         
         az role assignment create --role "Storage Blob Data Owner" --assignee $productionSlotPrincipalId --scope $storageAccountResourceId
         az role assignment create --role "Storage Blob Data Owner" --assignee $stagingSlotPrincipalId --scope $storageAccountResourceId
-        az role assignment create --role "Storage Queue Data Contributor" --assignee $productionSlotPrincipalId --scope $storageAccountResourceId
-        az role assignment create --role "Storage Queue Data Contributor" --assignee $stagingSlotPrincipalId --scope $storageAccountResourceId
+        az role assignment create --role "Storage Queue Data Contributor" --assignee $productionSlotPrincipalId --scope "$(sharedStorageAccountResourceId)"
+        az role assignment create --role "Storage Queue Data Contributor" --assignee $stagingSlotPrincipalId --scope "$(sharedStorageAccountResourceId)"
 
   - task: AzureAppServiceManage@0
     displayName: "Stop Azure App Service (Staging)"
