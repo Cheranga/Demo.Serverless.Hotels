@@ -64,5 +64,5 @@ jobs:
 
       - name: 'Setup RBAC'
         run: |
-          funcAppDeployment = "${{ github.run_number }}"+"-functionapp"
-          storageAccountDeployment = "${{ github.run_number }}"+"-storageaccount"
+          funcAppDeployment = "${{ github.run_number }}-functionapp"
+          storageAccountDeployment = "${{ github.run_number }}-storageaccount"
