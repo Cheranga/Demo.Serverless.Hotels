@@ -24,4 +24,4 @@ jobs:
        name: Run AZ CLI
        with:
          inlineScript: |
-            az group create -n ${{ env.AZURE_RESOURCE_GROUP_NAME }} -l ${{ env.AZURE_RESOURCE_GROUP_LOCATION }}
+            az group create -n "${{ env.AZURE_RESOURCE_GROUP_NAME }}" -l "${{ env.AZURE_RESOURCE_GROUP_LOCATION }}"
