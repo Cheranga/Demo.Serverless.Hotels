@@ -9,8 +9,8 @@ on:
   workflow_dispatch:
 
 env:
-    AZURE_RESOURCE_GROUP_NAME: "rg-cc-gha-hotels-dev"
-    AZURE_RESOURCE_GROUP_LOCATION: "australiasoutheast"
+    AZURE_RESOURCE_GROUP_NAME: 'rg-cc-gha-hotels-dev'
+    AZURE_RESOURCE_GROUP_LOCATION: 'australiasoutheast'
 
 jobs:
   setup-resource-group:
@@ -24,10 +24,10 @@ jobs:
        name: Run AZ CLI
        with:
          inlineScript: |
-          #!/bin/bash
-          if $(az group exists --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}) ; then
+           #!/bin/bash
+           if $(az group exists --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}) ; then
             echo "Azure resource group already exists, skipping creation..."
-          else
+           else
             az group create --name ${{ env.AZURE_RESOURCE_GROUP_NAME }} --location ${{ env.AZURE_RESOURCE_GROUP_LOCATION }}
             echo "Azure resource group created"
-          fi
+           fi
