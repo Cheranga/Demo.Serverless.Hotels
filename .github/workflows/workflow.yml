@@ -46,7 +46,7 @@ jobs:
         with:
           failOnStdErr: false
           deploymentName: ${{ github.run_number }}
-          resourceGroupName: ${{ inputs.resourceGroupName }}
+          resourceGroupName: ${{ env.ResourceGroupName }}
           template: ./Deploy/Resources/main.bicep
           parameters: > 
              buildNumber=${{ github.run_number }}
