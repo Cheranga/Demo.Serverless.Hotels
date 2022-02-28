@@ -15,6 +15,15 @@ jobs:
     env:
       ResourceGroupName: 'rg-cc-gha-hotels-dev'
       ResourceGroupLocation: 'australiasoutheast'
+      StorageAccountName: 'sgccdemohotelsdev'
+      StorageSku: 'Standard_LRS'
+      StorageSkuTier: 'Standard'
+      FunctionAppName: 'demohotels'
+      EnvironmentName: 'dev'
+      AspName: 'plan-demohotels-dev'
+      PlanSku: 'Y1'
+      PlanTier: 'Dynamic'
+      SharedStorageAccount: 'sgccplatformdemo'
 
     steps:
       - name: 'Login via Azure CLI'
@@ -30,4 +39,24 @@ jobs:
             else
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
               echo "Azure resource group created"
-            fi      
+            fi 
+      - uses: actions/checkout@v2      
+      - name: 'Provision Azure Resources'             
+      - uses: azure/arm-deploy@v1
+        with:
+          failOnStdErr: false
+          deploymentName: ${{ github.run_number }}
+          resourceGroupName: ${{ inputs.resourceGroupName }}
+          template: ./Deploy/Resources/main.bicep
+          parameters: > 
+             buildNumber=${{ github.run_number }}
+             sgName=${{ env.StorageAccountName }}
+             storageSku=${{ env.StorageSku }}
+             storageSkuTier=${{ env.StorageSkuTier }}
+             functionAppName=${{ env.FunctionAppName }}
+             environmentName=${{ env.EnvironmentName }}
+             aspName=${{ env.AspName }}
+             planSku=${{ env.PlanSku }}
+             planTier=${{ env.PlanTier }}
+             sharedStorageAccount=${{ env.SharedStorageAccount }}
+          
