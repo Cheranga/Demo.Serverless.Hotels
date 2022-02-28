@@ -44,24 +44,24 @@ jobs:
             fi 
       - name: 'Checkout repository'
         uses: actions/checkout@v2      
-      # - name: 'Provision Azure Resources'             
-      #   uses: azure/arm-deploy@v1
-      #   with:
-      #     failOnStdErr: false
-      #     deploymentName: ${{ github.run_number }}
-      #     resourceGroupName: ${{ env.ResourceGroupName }}
-      #     template: ./Deploy/Resources/main.bicep
-      #     parameters: > 
-      #        buildNumber=${{ github.run_number }}
-      #        sgName=${{ env.StorageAccountName }}
-      #        storageSku=${{ env.StorageSku }}
-      #        storageSkuTier=${{ env.StorageSkuTier }}
-      #        functionAppName=${{ env.FunctionAppName }}
-      #        environmentName=${{ env.EnvironmentName }}
-      #        aspName=${{ env.AspName }}
-      #        planSku=${{ env.PlanSku }}
-      #        planTier=${{ env.PlanTier }}
-      #        sharedStorageAccount=${{ env.SharedStorageAccount }}
+      - name: 'Provision Azure Resources'             
+        uses: azure/arm-deploy@v1
+        with:
+          failOnStdErr: false
+          deploymentName: ${{ github.run_number }}
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          template: ./Deploy/Resources/main.bicep
+          parameters: > 
+             buildNumber=${{ github.run_number }}
+             sgName=${{ env.StorageAccountName }}
+             storageSku=${{ env.StorageSku }}
+             storageSkuTier=${{ env.StorageSkuTier }}
+             functionAppName=${{ env.FunctionAppName }}
+             environmentName=${{ env.EnvironmentName }}
+             aspName=${{ env.AspName }}
+             planSku=${{ env.PlanSku }}
+             planTier=${{ env.PlanTier }}
+             sharedStorageAccount=${{ env.SharedStorageAccount }}
 
       - name: 'Setup RBAC'
         shell: powershell
