@@ -65,7 +65,8 @@ jobs:
       - name: 'Setup RBAC'
         uses: Azure/CLI@v1
         with:
-          inlineScript: |            
+          inlineScript: |  
+            #!/bin/bash          
             funcAppDeployment = "${{ github.run_number }}"+"-functionapp"
             storageAccountDeployment = "${{ github.run_number }}"+"-storageaccount"
 
