@@ -1,33 +1,30 @@
 name: Demo.Serverless.Hotels
 concurrency: demo-serverless-hotels
 
-on: 
-  push:
-    branches: 
-      - main
-      - feature/**    
+on:
   workflow_dispatch:
 
-env:
-    AZURE_RESOURCE_GROUP_NAME: 'rg-cc-gha-hotels-dev'
-    AZURE_RESOURCE_GROUP_LOCATION: 'australiasoutheast'
-
 jobs:
-  setup-resource-group:
-     runs-on: windows-latest
-     steps:      
-     - uses: azure/login@v1
-       name: Sign in to Azure
-       with:
-         creds: ${{ secrets.AZURE_CREDENTIALS }}
-     - uses: Azure/cli@v1
-       name: Run AZ CLI
-       with:
-         inlineScript: |
-           #!/bin/bash
-           if $(az group exists --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}) ; then
-            echo "Azure resource group already exists, skipping creation..."
-           else
-            az group create --name ${{ env.AZURE_RESOURCE_GROUP_NAME }} --location ${{ env.AZURE_RESOURCE_GROUP_LOCATION }}
-            echo "Azure resource group created"
-           fi
+  deploy_resource_group:
+    runs-on: ubuntu-latest
+
+    env:
+      ResourceGroupName: 'rg-cc-gha-hotels-dev'
+      ResourceGroupLocation: 'australiasoutheast'
+
+    steps:
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: actions/checkout@v2
+      - uses: Azure/CLI@v1
+        with:
+          inlineScript: |
+            #!/bin/bash
+            if $(az group exists --name ${{ env.ResourceGroupName }}) ; then
+              echo "Azure resource group already exists, skipping creation..."
+            else
+              az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
+              echo "Azure resource group created"
+            fi      
