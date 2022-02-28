@@ -42,7 +42,7 @@ jobs:
             fi 
       - uses: actions/checkout@v2      
       - name: 'Provision Azure Resources'             
-      - uses: azure/arm-deploy@v1
+        uses: azure/arm-deploy@v1
         with:
           failOnStdErr: false
           deploymentName: ${{ github.run_number }}
