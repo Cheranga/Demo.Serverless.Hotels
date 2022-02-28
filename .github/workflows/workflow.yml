@@ -66,5 +66,5 @@ jobs:
         uses: Azure/CLI@v1
         with:
           inlineScript: |            
-            testMe="Cheranga"           
-            echo $testMe
+            funcAppDeployment = ${{ github.run_number }}+"-functionapp"
+            storageAccountDeployment = ${{ github.run_number }}+"-storageaccount"
