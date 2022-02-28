@@ -24,4 +24,10 @@ jobs:
        name: Run AZ CLI
        with:
          inlineScript: |
-            az group create -n "${{ env.AZURE_RESOURCE_GROUP_NAME }}" -l "${{ env.AZURE_RESOURCE_GROUP_LOCATION }}"
+          #!/bin/bash
+          if $(az group exists --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}) ; then
+            echo "Azure resource group already exists, skipping creation..."
+          else
+            az group create --name ${{ env.AZURE_RESOURCE_GROUP_NAME }} --location ${{ env.AZURE_RESOURCE_GROUP_LOCATION }}
+            echo "Azure resource group created"
+          fi
