@@ -69,7 +69,7 @@ jobs:
           $funcAppDeployment = "${{ github.run_number }}-functionapp"
           $storageAccountDeployment = "${{ github.run_number }}-storageaccount"          
 
-          echo $(funcAppDeployment)
+          Write-Host "$funcAppDeployment"
 
           
 
