@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-    AZURE_RESOURCE_GROUP_NAME: rg--cc-gha-hotels-dev  
+    AZURE_RESOURCE_GROUP_NAME: rg-cc-gha-hotels-dev  
     AZURE_RESOURCE_GROUP_LOCATION: australiasoutheast
 
 jobs:
