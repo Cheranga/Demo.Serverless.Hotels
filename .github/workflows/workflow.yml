@@ -65,7 +65,6 @@ jobs:
       - name: 'Setup RBAC'
         uses: Azure/CLI@v1
         with:
-          inlineScript: |
-            #!/bin/bash 
-            $testMe = "Cheranga"           
+          inlineScript: |            
+            testMe="Cheranga"           
             echo $testMe
