@@ -34,7 +34,8 @@ jobs:
         with:
           inlineScript: |
             #!/bin/bash
-            if $(az group exists --name ${{ env.ResourceGroupName }}) ; then
+            $ifExists = az group exists -n "$(rgName)"
+            if $ifExists == true 
               echo "Azure resource group already exists, skipping creation..."
             else
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
