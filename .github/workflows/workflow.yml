@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy_resource_group:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     env:
       ResourceGroupName: 'rg-cc-gha-hotels-dev'
