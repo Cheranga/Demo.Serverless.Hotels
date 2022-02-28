@@ -82,9 +82,6 @@ jobs:
             echo $productionSlotPrincipalId
             echo $stagingSlotPrincipalId
 
-            # az ad sp create --id "$productionSlotPrincipalId"
-            # az ad sp create --id "$stagingSlotPrincipalId"
-
             az role assignment create --role "Storage Blob Data Owner" --assignee-object-id "$productionSlotPrincipalId" --assignee-principal-type "ServicePrincipal" --scope "$storageAccountResourceId"
             az role assignment create --role "Storage Blob Data Owner" --assignee-object-id "$stagingSlotPrincipalId" --assignee-principal-type "ServicePrincipal" --scope "$storageAccountResourceId"
             
