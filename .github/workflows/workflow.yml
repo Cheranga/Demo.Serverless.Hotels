@@ -30,6 +30,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}      
+      - name: 'Provision the resource group'
       - uses: Azure/CLI@v1
         with:
           inlineScript: |
@@ -40,7 +41,8 @@ jobs:
               az group create --name ${{ env.ResourceGroupName }} --location ${{ env.ResourceGroupLocation }}
               echo "Azure resource group created"
             fi 
-      - uses: actions/checkout@v2      
+      - name: 'Checkout repository'
+        uses: actions/checkout@v2      
       - name: 'Provision Azure Resources'             
         uses: azure/arm-deploy@v1
         with:
@@ -59,4 +61,11 @@ jobs:
              planSku=${{ env.PlanSku }}
              planTier=${{ env.PlanTier }}
              sharedStorageAccount=${{ env.SharedStorageAccount }}
-          
+
+      - name: 'Setup RBAC'
+      - uses: Azure/CLI@v1
+        with:
+          inlineScript: |
+            #!/bin/bash 
+            testMe = "Cheranga"           
+            echo $testMe
