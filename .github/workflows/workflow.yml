@@ -63,12 +63,6 @@ jobs:
       #        sharedStorageAccount=${{ env.SharedStorageAccount }}
 
       - name: 'Setup RBAC'
-        uses: Azure/CLI@v1
-        with:
-          inlineScript: |  
-            #!/bin/bash          
-            funcAppDeployment = "${{ github.run_number }}-functionapp"
-            storageAccountDeployment = "${{ github.run_number }}-storageaccount"
-
-            echo $(funcAppDeployment)
-            echo $(storageAccountDeployment)
+        run: |
+          funcAppDeployment = "${{ github.run_number }}"+"-functionapp"
+          storageAccountDeployment = "${{ github.run_number }}"+"-storageaccount"
