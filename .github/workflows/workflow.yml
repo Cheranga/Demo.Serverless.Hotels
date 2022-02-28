@@ -71,9 +71,6 @@ jobs:
             funcAppDeployment="${{ github.run_number }}-functionapp"
             storageAccountDeployment="${{ github.run_number }}-storageaccount"
 
-            echo $funcAppDeployment
-            echo $storageAccountDeployment
-
             storageAccountResourceId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $storageAccountDeployment --query properties.outputs.subsResourceId.value)        
             productionSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.productionPrincipalId.value)
             stagingSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.stagingPrincipalId.value)
