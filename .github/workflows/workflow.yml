@@ -2,6 +2,10 @@ name: Demo.Serverless.Hotels
 concurrency: demo-serverless-hotels
 
 on:
+  push:
+    branches:
+      - main
+      - feature/**
   workflow_dispatch:
 
 jobs:
