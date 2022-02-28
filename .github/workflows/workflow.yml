@@ -20,8 +20,7 @@ jobs:
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: actions/checkout@v2
+          creds: ${{ secrets.AZURE_CREDENTIALS }}      
       - uses: Azure/CLI@v1
         with:
           inlineScript: |
