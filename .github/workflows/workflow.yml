@@ -72,3 +72,11 @@ jobs:
 
             echo $funcAppDeployment
             echo $storageAccountDeployment
+
+            storageAccountResourceId=$(az deployment group show -g "$(rgName)" -n "$storageAccountDeployment" --query properties.outputs.subsResourceId.value)        
+            productionSlotPrincipalId=$(az deployment group show -g "$(rgName)" -n "$funcAppDeployment" --query properties.outputs.productionPrincipalId.value)
+            stagingSlotPrincipalId=$(az deployment group show -g "$(rgName)" -n "$funcAppDeployment" --query properties.outputs.stagingPrincipalId.value)
+
+            echo $storageAccountResourceId
+            echo $productionSlotPrincipalId
+            echo $stagingSlotPrincipalId
