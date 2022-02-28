@@ -21,4 +21,4 @@ jobs:
        name: Run what-if
        with:
          inlineScript: |
-          az group create -n "rg-cc-gha-hotels-dev" -l "australiasoutheast"
+            az group create -n "rg-cc-gha-hotels-dev" -l "australiasoutheast"
