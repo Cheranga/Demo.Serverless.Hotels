@@ -1,0 +1,22 @@
+name: Demo.Serverless.Hotels
+concurrency: demo-serverless-hotels
+
+on: 
+  push:
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate:
+     runs-on: windows-latest
+     steps:      
+     - uses: azure/login@v1
+       name: Sign in to Azure
+       with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}
+     - uses: Azure/cli@v1
+       name: Run what-if
+       with:
+         inlineScript: |
+          az group create -n rg-cc-gha-hotels-dev -l australiasoutheast
