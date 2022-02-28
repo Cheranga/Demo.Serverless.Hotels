@@ -66,8 +66,8 @@ jobs:
       - name: 'Setup RBAC'
         shell: powershell
         run: |
-          $funcAppDeployment = "${{ github.run_number }}"+"-functionapp"
-          $storageAccountDeployment = "${{ github.run_number }}"+"-storageaccount"          
+          $funcAppDeployment = "${{ github.run_number }}-functionapp"
+          $storageAccountDeployment = "${{ github.run_number }}-storageaccount"          
 
           echo funcAppDeployment
           echo storageAccountDeployment
