@@ -129,6 +129,11 @@ resource storageBlobDataOwnerProductionAssignment 'Microsoft.Authorization/roleA
     principalId: functionAppModule.outputs.productionPrincipalId
     principalType: 'ServicePrincipal'
   }
+  dependsOn:[
+    storageAccount
+    functionAppModule
+    functionAppSettingsModule
+  ]
 }
 
 resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
@@ -138,4 +143,9 @@ resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssi
     principalId: functionAppModule.outputs.stagingPrincipalId
     principalType: 'ServicePrincipal'
   }
+  dependsOn:[
+    storageAccount
+    functionAppModule
+    functionAppSettingsModule
+  ]
 }
