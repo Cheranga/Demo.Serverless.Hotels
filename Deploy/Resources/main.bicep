@@ -130,8 +130,8 @@ resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-
   ]
 }
 
-resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  scope: storageAccount  
+resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
+  scope: storageAccount
   name: guid(sgName, 'stagingSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
   properties: {
     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
