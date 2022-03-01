@@ -10,7 +10,23 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    name: 'Build Pipeline'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+      - uses: actions/checkout@v2
+      - name: 'Setup .NET Core'
+      - uses: actions/setup-dotnetcore@v2
+      - with:
+          dotnet-version: '6.0.x'
+      - name: 'Restore'
+      - run: dotnet restore
+      - name: 'Build and Publish'
+      - run: dotnet publish --no-restore --configuration Release --output ./publish_output
+
   deploy_resource_group:
+    needs: build
     runs-on: ubuntu-latest
 
     env:
@@ -26,7 +42,7 @@ jobs:
       PlanTier: 'Dynamic'
       SharedStorageAccount: 'sgccplatformdemo'
 
-    steps:
+    steps:      
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
