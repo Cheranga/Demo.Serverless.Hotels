@@ -6,7 +6,7 @@ param planName string
 
 param location string = resourceGroup().location
 
-resource functionAppProductionSlot 'Microsoft.Web/sites@2021-02-01' = {
+resource functionAppProductionSlot 'Microsoft.Web/sites@2021-03-01' = {
   name: name
   location: location
   kind:'functionapp'
@@ -16,7 +16,7 @@ resource functionAppProductionSlot 'Microsoft.Web/sites@2021-02-01' = {
   properties:{
     serverFarmId:planName        
     siteConfig:{
-      autoSwapSlotName: '${name}/Staging'
+      autoSwapSlotName: '${name}/slots/Staging'      
     }
   }  
 }
