@@ -76,6 +76,6 @@ jobs:
             productionSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.productionPrincipalId.value)
             stagingSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.stagingPrincipalId.value)
 
-            az role assignment create --role "Storage Blob Data Owner" --assignee-object-id $productionSlotPrincipalId --assignee-principal-type "ServicePrincipal" --scope "$subscriptionScope"
-            az role assignment create --role "Storage Blob Data Owner" --assignee-object-id $stagingSlotPrincipalId --assignee-principal-type "ServicePrincipal" --scope "$subscriptionScope"
+            az role assignment create --role "Storage Blob Data Owner" --assignee $productionSlotPrincipalId --scope $subscriptionScope
+            az role assignment create --role "Storage Blob Data Owner" --assignee $stagingSlotPrincipalId --scope $subscriptionScope
             
