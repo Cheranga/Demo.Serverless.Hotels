@@ -15,8 +15,7 @@ env:
 
 jobs:
   provision:
-    name: 'Setup Azure Infrastructure'
-    needs: build
+    name: 'Setup Azure Infrastructure'    
     runs-on: ubuntu-latest
 
     env:
@@ -97,7 +96,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}      
-          
+
       - name: 'Deploy Azure Function App'
         uses: azure/webapps-deploy@v2
         with:
