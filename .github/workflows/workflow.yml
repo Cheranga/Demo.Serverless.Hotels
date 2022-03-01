@@ -23,7 +23,7 @@ jobs:
       - name: 'Restore'
         run: dotnet restore
       - name: 'Build and Publish'
-        run: dotnet publish --no-restore --configuration Release --output ./publish_output
+        run: dotnet publish --no-restore --configuration Release --output './publish_output'
 
   deploy_resource_group:
     name: 'Setup Azure Infrastructure'
@@ -86,6 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FunctionAppName: 'fn-demohotels-dev'
+      PackagePath: './publish_output'
     steps:
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
@@ -95,7 +96,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.FunctionAppName }}
-          package: ./publish_output
+          package: ${{ env.PackagePath }}
 
       
 
