@@ -63,19 +63,19 @@ jobs:
              planTier=${{ env.PlanTier }}
              sharedStorageAccount=${{ env.SharedStorageAccount }}          
 
-      - name: 'Setup RBAC'
-        uses: Azure/CLI@v1
-        with:
-          inlineScript: |  
-            #!/bin/bash          
-            funcAppDeployment="${{ github.run_number }}-functionapp"
-            storageAccountDeployment="${{ github.run_number }}-storageaccount"
-            subscriptionScope="/subscriptions/${{ secrets.SUBSCRIPTIONID }}"
+      # - name: 'Setup RBAC'
+      #   uses: Azure/CLI@v1
+      #   with:
+      #     inlineScript: |  
+      #       #!/bin/bash          
+      #       funcAppDeployment="${{ github.run_number }}-functionapp"
+      #       storageAccountDeployment="${{ github.run_number }}-storageaccount"
+      #       subscriptionScope="/subscriptions/${{ secrets.SUBSCRIPTIONID }}"
 
-            storageAccountResourceId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $storageAccountDeployment --query properties.outputs.subsResourceId.value)        
-            productionSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.productionPrincipalId.value)
-            stagingSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.stagingPrincipalId.value)
+      #       storageAccountResourceId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $storageAccountDeployment --query properties.outputs.subsResourceId.value)        
+      #       productionSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.productionPrincipalId.value)
+      #       stagingSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.stagingPrincipalId.value)
 
-            az role assignment create --role "Storage Blob Data Owner" --assignee $productionSlotPrincipalId --scope $subscriptionScope
-            az role assignment create --role "Storage Blob Data Owner" --assignee $stagingSlotPrincipalId --scope $subscriptionScope
+      #       az role assignment create --role "Storage Blob Data Owner" --assignee $productionSlotPrincipalId --scope $subscriptionScope
+      #       az role assignment create --role "Storage Blob Data Owner" --assignee $stagingSlotPrincipalId --scope $subscriptionScope
             

@@ -106,3 +106,32 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
     keyVaultModule
   ]
 }
+
+resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
+  name: guid(sgName, 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
+  properties: {
+    roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+    principalId: functionAppModule.outputs.productionPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+  dependsOn:[
+    storageAccountModule
+    functionAppModule
+    functionAppSettingsModule
+  ]
+}
+
+resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
+  name: guid(sgName, 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
+  properties: {
+    roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+    principalId: functionAppModule.outputs.stagingPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+  dependsOn:[
+    storageAccountModule
+    functionAppModule
+    functionAppSettingsModule
+    roleAssignmentProduction
+  ]
+}
