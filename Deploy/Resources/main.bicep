@@ -130,13 +130,13 @@ resource storageQueueDataContributor 'Microsoft.Authorization/roleDefinitions@20
 
 resource storageBlobDataOwnerProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'productionSlot', storageBlobDataOwnerDefinition.id)
+  scope:storageAccount
   properties: {
     roleDefinitionId: storageBlobDataOwnerDefinition.id
     principalId: functionAppModule.outputs.productionPrincipalId
     principalType: 'ServicePrincipal'
   }
   dependsOn:[
-    storageAccount
     functionAppModule
     functionAppSettingsModule
   ]
@@ -144,13 +144,13 @@ resource storageBlobDataOwnerProductionAssignment 'Microsoft.Authorization/roleA
 
 resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'stagingSlot', storageBlobDataOwnerDefinition.id)
+  scope:storageAccount
   properties: {
     roleDefinitionId: storageBlobDataOwnerDefinition.id
     principalId: functionAppModule.outputs.stagingPrincipalId
     principalType: 'ServicePrincipal'
   }
   dependsOn:[
-    storageAccount
     functionAppModule
     functionAppSettingsModule
   ]
@@ -158,13 +158,13 @@ resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssi
 
 resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'productionSlot', storageQueueDataContributor.id)  
+  scope:storageAccount
   properties: {
     roleDefinitionId: storageQueueDataContributor.id
     principalId: functionAppModule.outputs.productionPrincipalId
     principalType: 'ServicePrincipal'
   }
   dependsOn:[
-    storageAccount
     functionAppModule
     functionAppSettingsModule
   ]
@@ -172,13 +172,13 @@ resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorizatio
 
 resource storageQueueDataContributorStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'stagingSlot', storageQueueDataContributor.id)
+  scope:storageAccount
   properties: {
     roleDefinitionId: storageQueueDataContributor.id
     principalId: functionAppModule.outputs.stagingPrincipalId
     principalType: 'ServicePrincipal'
   }
   dependsOn:[
-    storageAccount
     functionAppModule
     functionAppSettingsModule
   ]
