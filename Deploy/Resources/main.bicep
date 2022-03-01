@@ -116,13 +116,13 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
   ]
 }
 
-@description('This is the built-in Contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
+@description('This is the built-in storage blob data owner role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
 resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
   scope: subscription()
   name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
 }
 
-@description('This is the built-in Contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
+@description('This is the built-in storage queue data contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
 resource storageQueueDataContributor 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
   scope: subscription()
   name: '974c5e8b-45b9-4653-ba55-5f855dd0fb88'
