@@ -77,7 +77,22 @@ jobs:
              aspName=${{ env.AspName }}
              planSku=${{ env.PlanSku }}
              planTier=${{ env.PlanTier }}
-             sharedStorageAccount=${{ env.SharedStorageAccount }}          
+             sharedStorageAccount=${{ env.SharedStorageAccount }}      
+
+  codedeploy:
+    needs: deploy_resource_group
+    name: 'Deploy Code'
+    runs-on: ubuntu-latest
+    env:
+      FunctionAppName: 'demohotels'
+    steps:
+      - name: 'Deploy Azure Function App'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.FunctionAppName }}
+          package: './publish_output'
+
+      
 
       # - name: 'Setup RBAC'
       #   uses: Azure/CLI@v1
