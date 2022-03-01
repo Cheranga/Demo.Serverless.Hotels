@@ -26,6 +26,7 @@ jobs:
         run: dotnet publish --no-restore --configuration Release --output ./publish_output
 
   deploy_resource_group:
+    name: 'Setup Azure Infrastructure'
     needs: build
     runs-on: ubuntu-latest
 
@@ -84,7 +85,7 @@ jobs:
     name: 'Deploy Code'
     runs-on: ubuntu-latest
     env:
-      FunctionAppName: 'demohotels'
+      FunctionAppName: 'fn-demohotels-dev'
     steps:
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
