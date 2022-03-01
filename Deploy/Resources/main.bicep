@@ -118,21 +118,10 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
   ]
 }
 
-resource sharedStg 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
-  scope: resourceGroup(sharedResourceGroup)  
-  name: sharedStorageAccount
-}
-
 @description('This is the built-in storage blob data owner role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
 resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
   scope: subscription()
   name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
-}
-
-@description('This is the built-in storage queue data contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
-resource storageQueueDataContributor 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
-  scope: subscription()
-  name: '974c5e8b-45b9-4653-ba55-5f855dd0fb88'
 }
 
 resource storageBlobDataOwnerProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
@@ -163,30 +152,18 @@ resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssi
   ]
 }
 
-resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(resourceGroup().id, 'productionSlot', storageQueueDataContributor.id)  
-  scope:sharedStg
-  properties: {
-    roleDefinitionId: storageQueueDataContributor.id
-    principalId: functionAppModule.outputs.productionPrincipalId
-    principalType: 'ServicePrincipal'
+module rbacModule 'RBAC/template.bicep' = {
+  scope:resourceGroup(sharedResourceGroup)
+  name: '${buildNumber}-rbac'
+  params: {
+    productionPrincipalId:functionAppModule.outputs.productionPrincipalId
+    stagingPrincipalId:functionAppModule.outputs.stagingPrincipalId
+    sharedResourceGroup:sharedResourceGroup
+    sharedStorageAccount:sharedStorageAccount
   }
-  dependsOn:[
+  dependsOn: [
     functionAppModule
     functionAppSettingsModule
   ]
 }
 
-resource storageQueueDataContributorStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(resourceGroup().id, 'stagingSlot', storageQueueDataContributor.id)
-  scope:sharedStg
-  properties: {
-    roleDefinitionId: storageQueueDataContributor.id
-    principalId: functionAppModule.outputs.stagingPrincipalId
-    principalType: 'ServicePrincipal'
-  }
-  dependsOn:[
-    functionAppModule
-    functionAppSettingsModule
-  ]
-}
