@@ -102,6 +102,7 @@ jobs:
         with:
           app-name: ${{ env.FunctionAppName }}
           package: '${{ env.PackagePath }}/funcapp'
+          slot-name: Staging
 
       
 
