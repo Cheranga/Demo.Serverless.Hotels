@@ -14,23 +14,6 @@ env:
 
 
 jobs:
-  build:
-    name: 'Build Pipeline'
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout Repository'
-        uses: actions/checkout@v2
-      - name: 'Setup .NET Core'
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '6.0.x'
-      - name: 'Restore'
-        run: dotnet restore
-      - name: 'Build'
-        run: dotnet build --no-restore -c Release
-      - name: 'Publish'
-        run: dotnet publish --configuration Release --no-build --output '${{ env.PackagePath }}/funcapp'
-
   provision:
     name: 'Setup Azure Infrastructure'
     needs: build
@@ -84,19 +67,37 @@ jobs:
              aspName=${{ env.AspName }}
              planSku=${{ env.PlanSku }}
              planTier=${{ env.PlanTier }}
-             sharedStorageAccount=${{ env.SharedStorageAccount }}      
+             sharedStorageAccount=${{ env.SharedStorageAccount }}   
 
-  codedeploy:
+  buildanddeploy:
     needs: provision
-    name: 'Deploy Code'
+    name: 'Build and Deploy'
     runs-on: ubuntu-latest
     env:
       FunctionAppName: 'fn-demohotels-dev'      
     steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v2
+
+      - name: 'Setup .NET Core'
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: 'Restore'
+        run: dotnet restore
+
+      - name: 'Build'
+        run: dotnet build --no-restore -c Release
+
+      - name: 'Publish'
+        run: dotnet publish --configuration Release --no-build --output '${{ env.PackagePath }}/funcapp'                
+
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}      
+          
       - name: 'Deploy Azure Function App'
         uses: azure/webapps-deploy@v2
         with:
