@@ -157,7 +157,7 @@ resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssi
 }
 
 resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(resourceGroup().id, 'productionSlot', storageQueueDataContributor.id)
+  name: guid(resourceGroup().id, 'productionSlot', storageQueueDataContributor.id)  
   properties: {
     roleDefinitionId: storageQueueDataContributor.id
     principalId: functionAppModule.outputs.productionPrincipalId
