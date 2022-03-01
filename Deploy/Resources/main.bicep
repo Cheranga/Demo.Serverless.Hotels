@@ -122,17 +122,13 @@ resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions
   name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
 }
 
-resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {    
-  name: guid(sgName, 'productionSlot', storageBlobDataOwnerDefinition.id)
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(resourceGroup().id, 'productionSlot', storageBlobDataOwnerDefinition.id)
   properties: {
-    roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+    roleDefinitionId: storageBlobDataOwnerDefinition.id
     principalId: functionAppModule.outputs.productionPrincipalId
     principalType: 'ServicePrincipal'
   }
-  dependsOn:[    
-    functionAppModule
-    functionAppSettingsModule
-  ]
 }
 
 // resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
