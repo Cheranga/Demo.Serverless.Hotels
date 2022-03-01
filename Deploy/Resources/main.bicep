@@ -122,6 +122,12 @@ resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions
   name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
 }
 
+@description('This is the built-in Contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
+resource storageQueueDataContributor 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: '974c5e8b-45b9-4653-ba55-5f855dd0fb88'
+}
+
 resource storageBlobDataOwnerProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'productionSlot', storageBlobDataOwnerDefinition.id)
   properties: {
@@ -140,6 +146,34 @@ resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssi
   name: guid(resourceGroup().id, 'stagingSlot', storageBlobDataOwnerDefinition.id)
   properties: {
     roleDefinitionId: storageBlobDataOwnerDefinition.id
+    principalId: functionAppModule.outputs.stagingPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+  dependsOn:[
+    storageAccount
+    functionAppModule
+    functionAppSettingsModule
+  ]
+}
+
+resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(resourceGroup().id, 'productionSlot', storageQueueDataContributor.id)
+  properties: {
+    roleDefinitionId: storageQueueDataContributor.id
+    principalId: functionAppModule.outputs.productionPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+  dependsOn:[
+    storageAccount
+    functionAppModule
+    functionAppSettingsModule
+  ]
+}
+
+resource storageQueueDataContributorStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(resourceGroup().id, 'stagingSlot', storageQueueDataContributor.id)
+  properties: {
+    roleDefinitionId: storageQueueDataContributor.id
     principalId: functionAppModule.outputs.stagingPrincipalId
     principalType: 'ServicePrincipal'
   }
