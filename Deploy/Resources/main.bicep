@@ -116,9 +116,14 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
   ]
 }
 
-resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
-  scope: storageAccount
-  name: guid(sgName, 'productionSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
+@description('This is the built-in Contributor role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
+resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+}
+
+resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {    
+  name: guid(sgName, 'productionSlot', storageBlobDataOwnerDefinition.id)
   properties: {
     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
     principalId: functionAppModule.outputs.productionPrincipalId
@@ -130,16 +135,16 @@ resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-
   ]
 }
 
-resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
-  scope: storageAccount
-  name: guid(sgName, 'stagingSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
-  properties: {
-    roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
-    principalId: functionAppModule.outputs.stagingPrincipalId
-    principalType: 'ServicePrincipal'
-  }
-  dependsOn:[    
-    functionAppModule
-    functionAppSettingsModule
-  ]
-}
+// resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
+//   scope: storageAccount
+//   name: guid(sgName, 'stagingSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
+//   properties: {
+//     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
+//     principalId: functionAppModule.outputs.stagingPrincipalId
+//     principalType: 'ServicePrincipal'
+//   }
+//   dependsOn:[    
+//     functionAppModule
+//     functionAppSettingsModule
+//   ]
+// }
