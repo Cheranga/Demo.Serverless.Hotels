@@ -95,7 +95,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.FunctionAppName }}
-          package: './publish_output'
+          package: ./publish_output
 
       
 
