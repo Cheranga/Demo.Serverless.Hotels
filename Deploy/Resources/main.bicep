@@ -108,7 +108,7 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
 }
 
 resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
-  name: guid(sgName, 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
+  name: guid(sgName, 'productionSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
   properties: {
     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
     principalId: functionAppModule.outputs.productionPrincipalId
@@ -122,7 +122,7 @@ resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-
 }
 
 resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
-  name: guid(sgName, 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
+  name: guid(sgName, 'stagingSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
   properties: {
     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
     principalId: functionAppModule.outputs.stagingPrincipalId
@@ -132,6 +132,5 @@ resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-
     storageAccountModule
     functionAppModule
     functionAppSettingsModule
-    roleAssignmentProduction
   ]
 }
