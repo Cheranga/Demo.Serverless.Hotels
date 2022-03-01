@@ -7,7 +7,11 @@ on:
       - main
       - feature/**
 
-  workflow_dispatch:
+  workflow_dispatch: 
+
+env:
+  PackagePath: './published'
+
 
 jobs:
   build:
@@ -22,10 +26,12 @@ jobs:
           dotnet-version: '6.0.x'
       - name: 'Restore'
         run: dotnet restore
-      - name: 'Build and Publish'
-        run: dotnet publish --no-restore --configuration Release --output './publish_output'
+      - name: 'Build'
+        run: dotnet build --no-restore -c Release
+      - name: 'Publish'
+        run: dotnet publish --configuration Release --no-build --output ${{ env.PackagePath }}
 
-  deploy_resource_group:
+  provision:
     name: 'Setup Azure Infrastructure'
     needs: build
     runs-on: ubuntu-latest
@@ -81,12 +87,11 @@ jobs:
              sharedStorageAccount=${{ env.SharedStorageAccount }}      
 
   codedeploy:
-    needs: deploy_resource_group
+    needs: provision
     name: 'Deploy Code'
     runs-on: ubuntu-latest
     env:
-      FunctionAppName: 'fn-demohotels-dev'
-      PackagePath: './publish_output'
+      FunctionAppName: 'fn-demohotels-dev'      
     steps:
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
