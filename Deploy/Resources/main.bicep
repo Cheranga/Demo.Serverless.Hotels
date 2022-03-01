@@ -37,6 +37,8 @@ var appInsName = 'ins-${functionAppName}-${environmentName}'
 
 param location string = resourceGroup().location
 
+param sharedResourceGroup string
+
 // Storage account
 // module storageAccountModule './StorageAccount/template.bicep' = {
 //   name: '${buildNumber}-storageaccount'
@@ -117,7 +119,7 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
 }
 
 resource sharedStg 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
-  scope: resourceGroup()  
+  scope: resourceGroup(sharedResourceGroup)  
   name: sharedStorageAccount
 }
 

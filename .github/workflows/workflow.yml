@@ -29,6 +29,7 @@ jobs:
       AspName: 'plan-demohotels-dev'
       PlanSku: 'Y1'
       PlanTier: 'Dynamic'
+      SharedResourceGroup: 'rg-cc-platform'
       SharedStorageAccount: 'sgccplatformdemo'
 
     steps:      
@@ -66,6 +67,7 @@ jobs:
              aspName=${{ env.AspName }}
              planSku=${{ env.PlanSku }}
              planTier=${{ env.PlanTier }}
+             sharedResourceGroup=${{ env.SharedResourceGroup }}
              sharedStorageAccount=${{ env.SharedStorageAccount }}   
 
   buildanddeploy:

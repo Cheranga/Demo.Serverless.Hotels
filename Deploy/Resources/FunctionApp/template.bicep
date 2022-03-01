@@ -26,8 +26,14 @@ resource functionAppStagingSlot 'Microsoft.Web/sites/slots@2021-03-01' = {
     type:'SystemAssigned'
   }  
   properties:{
-    serverFarmId:planName            
+    serverFarmId:planName   
+    siteConfig:{
+      autoSwapSlotName:'Production'
+    }         
   }
+  dependsOn:[
+    functionAppProductionSlot
+  ]
 }
 
 output productionPrincipalId string = functionAppProductionSlot.identity.principalId
