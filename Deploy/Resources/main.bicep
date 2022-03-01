@@ -122,7 +122,7 @@ resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions
   name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
 }
 
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource storageBlobDataOwnerProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'productionSlot', storageBlobDataOwnerDefinition.id)
   properties: {
     roleDefinitionId: storageBlobDataOwnerDefinition.id
@@ -131,16 +131,11 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
   }
 }
 
-// resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
-//   scope: storageAccount
-//   name: guid(sgName, 'stagingSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
-//   properties: {
-//     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
-//     principalId: functionAppModule.outputs.stagingPrincipalId
-//     principalType: 'ServicePrincipal'
-//   }
-//   dependsOn:[    
-//     functionAppModule
-//     functionAppSettingsModule
-//   ]
-// }
+resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(resourceGroup().id, 'stagingSlot', storageBlobDataOwnerDefinition.id)
+  properties: {
+    roleDefinitionId: storageBlobDataOwnerDefinition.id
+    principalId: functionAppModule.outputs.stagingPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
