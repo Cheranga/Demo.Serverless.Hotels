@@ -14,15 +14,12 @@ resource functionAppProductionSlot 'Microsoft.Web/sites@2021-03-01' = {
     type:'SystemAssigned'
   }    
   properties:{
-    serverFarmId:planName        
-    siteConfig:{
-      autoSwapSlotName: resourceId('Microsoft.Web/Sites/Slots', name, 'Staging')
-    }
+    serverFarmId:planName            
   }  
 }
 
 resource functionAppStagingSlot 'Microsoft.Web/sites/slots@2021-03-01' = {
-  name: '${name}/Staging'
+  name: '${functionAppProductionSlot.name}/Staging'
   location: location
   kind:'functionapp'
   identity:{
