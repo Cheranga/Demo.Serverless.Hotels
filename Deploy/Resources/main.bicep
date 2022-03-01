@@ -38,13 +38,22 @@ var appInsName = 'ins-${functionAppName}-${environmentName}'
 param location string = resourceGroup().location
 
 // Storage account
-module storageAccountModule './StorageAccount/template.bicep' = {
-  name: '${buildNumber}-storageaccount'
-  params: {
-    sgName: sgName
-    sku: storageSku
+// module storageAccountModule './StorageAccount/template.bicep' = {
+//   name: '${buildNumber}-storageaccount'
+//   params: {
+//     sgName: sgName
+//     sku: storageSku
+//     tier: storageSkuTier
+//     location:location
+//   }
+// }
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+  name: sgName
+  location: location
+  kind: 'StorageV2'
+  sku: {
+    name: storageSku
     tier: storageSkuTier
-    location:location
   }
 }
 
@@ -85,7 +94,7 @@ module keyVaultModule 'KeyVault/template.bicep' = {
     name: 'kv-${functionAppName}-${environmentName}'
     productionSlotPrincipalId: functionAppModule.outputs.productionPrincipalId
     stagingSlotPrincipalId: functionAppModule.outputs.stagingPrincipalId
-    storageAccountConnectionString: storageAccountModule.outputs.storageAccountConnectionString
+    storageAccountConnectionString: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
     location:location
   }
 }
@@ -99,7 +108,7 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
     sharedStorageAccount:sharedStorageAccount
   }
   dependsOn: [
-    storageAccountModule
+    storageAccount
     appInsightsModule
     aspModule
     functionAppModule
@@ -108,28 +117,28 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
 }
 
 resource roleAssignmentProduction 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
+  scope: storageAccount
   name: guid(sgName, 'productionSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
   properties: {
     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
     principalId: functionAppModule.outputs.productionPrincipalId
     principalType: 'ServicePrincipal'
   }
-  dependsOn:[
-    storageAccountModule
+  dependsOn:[    
     functionAppModule
     functionAppSettingsModule
   ]
 }
 
-resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {  
+resource roleAssignmentStaging 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  scope: storageAccount  
   name: guid(sgName, 'stagingSlot', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b')
   properties: {
     roleDefinitionId: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
     principalId: functionAppModule.outputs.stagingPrincipalId
     principalType: 'ServicePrincipal'
   }
-  dependsOn:[
-    storageAccountModule
+  dependsOn:[    
     functionAppModule
     functionAppSettingsModule
   ]
