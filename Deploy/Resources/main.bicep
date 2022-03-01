@@ -116,6 +116,11 @@ module functionAppSettingsModule 'FunctionAppSettings/template.bicep' = {
   ]
 }
 
+resource sharedStg 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
+  scope: resourceGroup()  
+  name: sharedStorageAccount
+}
+
 @description('This is the built-in storage blob data owner role. See https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#contributor')
 resource storageBlobDataOwnerDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
   scope: subscription()
@@ -158,7 +163,7 @@ resource storageBlobDataOwnerStagingAssignment 'Microsoft.Authorization/roleAssi
 
 resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'productionSlot', storageQueueDataContributor.id)  
-  scope:storageAccount
+  scope:sharedStg
   properties: {
     roleDefinitionId: storageQueueDataContributor.id
     principalId: functionAppModule.outputs.productionPrincipalId
@@ -172,7 +177,7 @@ resource storageQueueDataContributorProductionAssignment 'Microsoft.Authorizatio
 
 resource storageQueueDataContributorStagingAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(resourceGroup().id, 'stagingSlot', storageQueueDataContributor.id)
-  scope:storageAccount
+  scope:sharedStg
   properties: {
     roleDefinitionId: storageQueueDataContributor.id
     principalId: functionAppModule.outputs.stagingPrincipalId

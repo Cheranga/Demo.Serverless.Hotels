@@ -16,7 +16,7 @@ resource functionAppProductionSlot 'Microsoft.Web/sites@2021-02-01' = {
   properties:{
     serverFarmId:planName        
     siteConfig:{
-      autoSwapSlotName: 'Staging'
+      autoSwapSlotName: '${name}/Staging'
     }
   }  
 }
