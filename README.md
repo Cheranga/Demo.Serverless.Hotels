@@ -23,3 +23,12 @@ https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 * :bulb: Learning how to deploy .NET Core apps to Azure using GitHub Actions
 
 [Deploying an ASP.NET Core Web App to Azure](https://www.youtube.com/watch?v=cGvmbYE4HOY)
+
+
+* :bulb: Creating parameter files
+
+[Rather than passing parameters in the pipeline code, you can separate them into files](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files)
+
+* :bulb: Date functions in Bicep
+
+[Setting a custom date time format](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-date)
