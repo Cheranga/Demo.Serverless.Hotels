@@ -34,7 +34,7 @@ jobs:
 
     steps:      
       - name: 'Create resource group'
-        uses: Cheranga/GitHubActions/createresourcegroup@v1
+        uses: Cheranga/GitHubActions/createresourcegroup
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           name: ${{env.ResourceGroupName}}
