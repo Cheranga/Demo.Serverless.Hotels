@@ -58,6 +58,7 @@ jobs:
           location: ${{ env.ResourceGroupLocation }}
           planSku: ${{ env.PlanSku }}
           planTier: ${{ env.PlanTier }}
+          sharedStorageAccount: ${{ env.SharedStorageAccount }}
 
   #     - name: 'Checkout repository'
   #       uses: actions/checkout@v2      
