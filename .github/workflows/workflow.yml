@@ -43,10 +43,9 @@ jobs:
         uses: Cheranga/GitHubActions/keyvault@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          keyVaultName: 'kv-cc-blah'
+          keyVaultName: 'kv-cc-blaha'
           resourceGroupName: ${{ env.ResourceGroupName }}
           location: ${{ env.ResourceGroupLocation }}
-          readAccessPrincipalList: '68e5356d-cc10-4024-b860-d718026182a1'          
   #     - name: 'Checkout repository'
   #       uses: actions/checkout@v2      
   #     - name: 'Provision Azure Resources'             
