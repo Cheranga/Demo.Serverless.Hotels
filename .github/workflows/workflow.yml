@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest    
 
     env:
-      ResourceGroupName: 'rg-cc-gha-hotels-dev'
+      ResourceGroupName: 'rg-cc-funky-hotels-dev'
       ResourceGroupLocation: 'australiasoutheast'
       StorageAccountName: 'sgccdemohotelsdev'
       StorageSku: 'Standard_LRS'
