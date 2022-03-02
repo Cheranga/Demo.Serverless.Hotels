@@ -39,56 +39,35 @@ jobs:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           name: ${{env.ResourceGroupName}}
           location: ${{env.ResourceGroupLocation}}      
-      - name: 'Checkout repository'
-        uses: actions/checkout@v2      
-      - name: 'Provision Azure Resources'             
-        uses: azure/arm-deploy@v1
+      - name: 'Create test key vault'
+        uses: Cheranga/GitHubActions/keyvault@master
         with:
-          failOnStdErr: false
-          deploymentName: ${{ github.run_number }}
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          keyVaultName: 'kv-cc-blah'
           resourceGroupName: ${{ env.ResourceGroupName }}
-          template: ./Deploy/Resources/main.bicep
-          parameters: ./Deploy/Parameters/dev.json
-          # parameters: > 
-          #    buildNumber=${{ github.run_number }}
-          #    sgName=${{ env.StorageAccountName }}
-          #    storageSku=${{ env.StorageSku }}
-          #    storageSkuTier=${{ env.StorageSkuTier }}
-          #    functionAppName=${{ env.FunctionAppName }}
-          #    environmentName=${{ env.EnvironmentName }}
-          #    aspName=${{ env.AspName }}
-          #    planSku=${{ env.PlanSku }}
-          #    planTier=${{ env.PlanTier }}
-          #    sharedResourceGroup=${{ env.SharedResourceGroup }}
-          #    sharedStorageAccount=${{ env.SharedStorageAccount }}   
+          location: ${{ env.ResourceGroupLocation }}
+          readAccessPrincipalList: '68e5356d-cc10-4024-b860-d718026182a1'
+  #     - name: 'Checkout repository'
+  #       uses: actions/checkout@v2      
+  #     - name: 'Provision Azure Resources'             
+  #       uses: azure/arm-deploy@v1
+  #       with:
+  #         failOnStdErr: false
+  #         deploymentName: ${{ github.run_number }}
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         template: ./Deploy/Resources/main.bicep
+  #         parameters: ./Deploy/Parameters/dev.json
 
-  buildanddeploy:
-    needs: provision
-    name: 'Build and Deploy'
-    runs-on: ubuntu-latest
-    env:
-      FunctionAppName: 'fn-demohotels-dev'      
-    steps:
-      - name: 'Build and Deploy the Function App'
-        uses: Cheranga/GitHubActions/buildanddeploytofunctionapp@master
-        with:
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
-          dotnetVersion: '6.0.x'
-          functionAppName: ${{env.FunctionAppName}}
-
-      # - name: 'Setup RBAC'
-      #   uses: Azure/CLI@v1
-      #   with:
-      #     inlineScript: |  
-      #       #!/bin/bash          
-      #       funcAppDeployment="${{ github.run_number }}-functionapp"
-      #       storageAccountDeployment="${{ github.run_number }}-storageaccount"
-      #       subscriptionScope="/subscriptions/${{ secrets.SUBSCRIPTIONID }}"
-
-      #       storageAccountResourceId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $storageAccountDeployment --query properties.outputs.subsResourceId.value)        
-      #       productionSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.productionPrincipalId.value)
-      #       stagingSlotPrincipalId=$(az deployment group show -g "${{ env.ResourceGroupName }}" -n $funcAppDeployment --query properties.outputs.stagingPrincipalId.value)
-
-      #       az role assignment create --role "Storage Blob Data Owner" --assignee $productionSlotPrincipalId --scope $subscriptionScope
-      #       az role assignment create --role "Storage Blob Data Owner" --assignee $stagingSlotPrincipalId --scope $subscriptionScope
-            
+  # buildanddeploy:
+  #   needs: provision
+  #   name: 'Build and Deploy'
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     FunctionAppName: 'fn-demohotels-dev'      
+  #   steps:
+  #     - name: 'Build and Deploy the Function App'
+  #       uses: Cheranga/GitHubActions/buildanddeploytofunctionapp@master
+  #       with:
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         dotnetVersion: '6.0.x'
+  #         functionAppName: ${{env.FunctionAppName}}           
