@@ -52,7 +52,8 @@ jobs:
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           dotnetVersion: '6.0.x'
-          functionAppName: 'funky-hotels-demo-dev'
+          environmentName: 'dev'
+          functionAppName: 'ccfunkyhotels'
           resourceGroupName: ${{ env.ResourceGroupName }}
           location: ${{ env.ResourceGroupLocation }}
 
