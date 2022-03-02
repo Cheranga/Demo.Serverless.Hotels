@@ -1,5 +1,5 @@
 @description('Build number')
-param buildNumber string = utcNow('ddMMyy-Hmmss')
+param buildNumber string = utcNow('yyyyMMdd-HHmmss')
 
 @description('Storage account name')
 @minLength(3)
