@@ -11,7 +11,7 @@ on:
 
 env:
   PackagePath: './published'
-  functionAppName: 'ccfunkyhotels'
+  FunctionAppName: 'ccfunkyhotels'
 
 jobs:
   provision:
