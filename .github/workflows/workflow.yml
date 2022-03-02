@@ -46,27 +46,37 @@ jobs:
       #     keyVaultName: 'kv-cc-blaha'
       #     resourceGroupName: ${{ env.ResourceGroupName }}
       #     location: ${{ env.ResourceGroupLocation }}
-      - name: 'Checkout repository'
-        uses: actions/checkout@v2      
-      - name: 'Provision Azure Resources'             
-        uses: azure/arm-deploy@v1
-        with:
-          failOnStdErr: false
-          deploymentName: ${{ github.run_number }}
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          template: ./Deploy/Resources/main.bicep
-          parameters: ./Deploy/Parameters/dev.json
 
-  buildanddeploy:
-    needs: provision
-    name: 'Build and Deploy'
-    runs-on: ubuntu-latest
-    env:
-      FunctionAppName: 'fn-demohotels-dev'      
-    steps:
-      - name: 'Build and Deploy the Function App'
-        uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
+      - name: 'Create and deploy function app'
+        uses: Cheranga/GitHubActions/createanddeployfunctionapp@master
         with:
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
           dotnetVersion: '6.0.x'
-          functionAppName: ${{env.FunctionAppName}}           
+          functionAppName: 'funky-hotels-demo-dev'
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          location: ${{ env.ResourceGroupLocation }}
+
+  #     - name: 'Checkout repository'
+  #       uses: actions/checkout@v2      
+  #     - name: 'Provision Azure Resources'             
+  #       uses: azure/arm-deploy@v1
+  #       with:
+  #         failOnStdErr: false
+  #         deploymentName: ${{ github.run_number }}
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         template: ./Deploy/Resources/main.bicep
+  #         parameters: ./Deploy/Parameters/dev.json
+
+  # buildanddeploy:
+  #   needs: provision
+  #   name: 'Build and Deploy'
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     FunctionAppName: 'fn-demohotels-dev'      
+  #   steps:
+  #     - name: 'Build and Deploy the Function App'
+  #       uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
+  #       with:
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         dotnetVersion: '6.0.x'
+  #         functionAppName: ${{env.FunctionAppName}}           
