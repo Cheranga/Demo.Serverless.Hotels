@@ -1,12 +1,36 @@
 {
-    "sgName": "sgccdemohotelsdev",
-    "storageSku": "Standard_LRS",
-    "storageSkuTier": "Standard",
-    "functionAppName": "demohotels",
-    "environmentName": "dev",
-    "aspName": "plan-demohotels-dev",
-    "planSku": "Y1",
-    "planTier": "Dynamic",
-    "sharedResourceGroup": "rg-cc-platform",
-    "sharedStorageAccount": "sgccplatformdemo"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sgName": {
+            "value": "sgccdemohotelsdev"
+        },        
+        "storageSku": {
+            "value": "Standard_LRS"
+        },
+        "storageSkuTier": {
+            "value": "Standard"
+        },
+        "functionAppName": {
+            "value": "demohotels"
+        },
+        "environmentName": {
+            "value": "dev"
+        },
+        "aspName": {
+            "value": "plan-demohotels-dev"
+        },
+        "planSku": {
+            "value": "Y1"
+        },
+        "planTier": {
+            "value": "Dynamic"
+        },
+        "sharedResourceGroup": {
+            "value": "rg-cc-platform"
+        },
+        "sharedStorageAccount": {
+            "value": "sgccplatformdemo"
+        }
+    }
 }
