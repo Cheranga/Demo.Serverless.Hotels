@@ -35,6 +35,8 @@ jobs:
           resourceGroupName: ${{ env.ResourceGroupName }}
           functionAppName: ${{ env.FunctionAppName }}
           location: ${{ env.ResourceGroupLocation }}
+          planTier: ${{ env.PlanTier }}
+          planSku: ${{ env.PlanSku }}
 
   buildanddeploy:
     needs: provision
