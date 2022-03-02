@@ -32,3 +32,7 @@ https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 * :bulb: Date functions in Bicep
 
 [Setting a custom date time format](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-date)
+
+* :bulb: Creating a GitHub custom action
+
+[Custom action creation](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)
