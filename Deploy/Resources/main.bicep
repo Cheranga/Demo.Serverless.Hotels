@@ -1,5 +1,5 @@
 @description('Build number')
-param buildNumber string
+param buildNumber string = utcNow('ddMMyy-Hmmss')
 
 @description('Storage account name')
 @minLength(3)
@@ -38,6 +38,8 @@ var appInsName = 'ins-${functionAppName}-${environmentName}'
 param location string = resourceGroup().location
 
 param sharedResourceGroup string
+
+
 
 // Storage account
 // module storageAccountModule './StorageAccount/template.bicep' = {
