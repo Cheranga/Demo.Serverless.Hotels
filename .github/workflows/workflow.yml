@@ -69,36 +69,12 @@ jobs:
     env:
       FunctionAppName: 'fn-demohotels-dev'      
     steps:
-      - name: 'Checkout Repository'
-        uses: actions/checkout@v2
-
-      - name: 'Setup .NET Core'
-        uses: actions/setup-dotnet@v2
+      - name: 'Build and Deploy the Function App'
+        uses: Cheranga/GitHubActions/buildanddeploytofunctionapp@master
         with:
-          dotnet-version: '6.0.x'
-
-      - name: 'Restore'
-        run: dotnet restore
-
-      - name: 'Build'
-        run: dotnet build --no-restore -c Release
-
-      - name: 'Publish'
-        run: dotnet publish --configuration Release --no-build --output '${{ env.PackagePath }}/funcapp'                
-
-      - name: 'Login via Azure CLI'
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}      
-
-      - name: 'Deploy Azure Function App'
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.FunctionAppName }}
-          package: '${{ env.PackagePath }}/funcapp'
-          slot-name: Staging
-
-      
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          dotnetVersion: '6.0.x'
+          functionAppName: ${{env.FunctionAppName}}
 
       # - name: 'Setup RBAC'
       #   uses: Azure/CLI@v1
