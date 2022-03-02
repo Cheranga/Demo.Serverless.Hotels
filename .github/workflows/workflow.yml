@@ -16,7 +16,7 @@ env:
 jobs:
   provision:
     name: 'Setup Azure Infrastructure'    
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
 
     env:
       ResourceGroupName: 'rg-cc-gha-hotels-dev'
@@ -65,7 +65,7 @@ jobs:
       FunctionAppName: 'fn-demohotels-dev'      
     steps:
       - name: 'Build and Deploy the Function App'
-        uses: Cheranga/GitHubActions/buildanddeploytofunctionapp@master
+        uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           dotnetVersion: '6.0.x'
