@@ -56,6 +56,8 @@ jobs:
           functionAppName: 'ccfunkyhotels'
           resourceGroupName: ${{ env.ResourceGroupName }}
           location: ${{ env.ResourceGroupLocation }}
+          planSku: ${{ env.PlanSku }}
+          planTier: ${{ env.PlanTier }}
 
   #     - name: 'Checkout repository'
   #       uses: actions/checkout@v2      
