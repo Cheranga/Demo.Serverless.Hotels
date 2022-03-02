@@ -33,6 +33,20 @@ https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 
 [Setting a custom date time format](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-date)
 
-* :bulb: Creating a GitHub custom action
+* :bulb: Creating a GitHub custom action (composite)
 
 [Custom action creation](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)
+
+* :bulb: Using GitHub actions to deploy to Azure
+
+https://blog.codingmilitia.com/2021/03/14/setting-up-demos-in-azure-part-2-github-actions/
+
+* :bulb: Azure Bicep loops
+
+[loops and conditions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/loops)
+
+* :bulb: Deploying an Azure function using Bicep
+
+[Mark Heath](https://markheath.net/post/azure-functions-bicep)
+
+
