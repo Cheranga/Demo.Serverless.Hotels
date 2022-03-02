@@ -57,18 +57,19 @@ jobs:
           deploymentName: ${{ github.run_number }}
           resourceGroupName: ${{ env.ResourceGroupName }}
           template: ./Deploy/Resources/main.bicep
-          parameters: > 
-             buildNumber=${{ github.run_number }}
-             sgName=${{ env.StorageAccountName }}
-             storageSku=${{ env.StorageSku }}
-             storageSkuTier=${{ env.StorageSkuTier }}
-             functionAppName=${{ env.FunctionAppName }}
-             environmentName=${{ env.EnvironmentName }}
-             aspName=${{ env.AspName }}
-             planSku=${{ env.PlanSku }}
-             planTier=${{ env.PlanTier }}
-             sharedResourceGroup=${{ env.SharedResourceGroup }}
-             sharedStorageAccount=${{ env.SharedStorageAccount }}   
+          parameters: ./Deploy/Parameters/dev.json
+          # parameters: > 
+          #    buildNumber=${{ github.run_number }}
+          #    sgName=${{ env.StorageAccountName }}
+          #    storageSku=${{ env.StorageSku }}
+          #    storageSkuTier=${{ env.StorageSkuTier }}
+          #    functionAppName=${{ env.FunctionAppName }}
+          #    environmentName=${{ env.EnvironmentName }}
+          #    aspName=${{ env.AspName }}
+          #    planSku=${{ env.PlanSku }}
+          #    planTier=${{ env.PlanTier }}
+          #    sharedResourceGroup=${{ env.SharedResourceGroup }}
+          #    sharedStorageAccount=${{ env.SharedStorageAccount }}   
 
   buildanddeploy:
     needs: provision

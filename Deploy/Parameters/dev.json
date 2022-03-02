@@ -1,0 +1,12 @@
+{
+    "sgName": "sgccdemohotelsdev",
+    "storageSku": "Standard_LRS",
+    "storageSkuTier": "Standard",
+    "functionAppName": "demohotels",
+    "environmentName": "dev",
+    "aspName": "plan-demohotels-dev",
+    "planSku": "Y1",
+    "planTier": "Dynamic",
+    "sharedResourceGroup": "rg-cc-platform",
+    "sharedStorageAccount": "sgccplatformdemo"
+}
