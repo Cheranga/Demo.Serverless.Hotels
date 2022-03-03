@@ -30,6 +30,8 @@ jobs:
         uses: Cheranga/GitHubActions/storageaccount@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          deploymentName: '${{ github.run_number }}-sg${{env.FunctionAppName}}${{env.EnvironmentName}}'
+          resourceGroupName: ${{env.ResourceGroupName}}
           name: 'sg${{env.FunctionAppName}}${{env.EnvironmentName}}'
           location: ${{ env.ResourceGroupLocation }}
           storageType: 'nonprod'
