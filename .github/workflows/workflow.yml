@@ -14,27 +14,45 @@ env:
   FunctionAppName: 'ccfunkyhotels'
 
 jobs:
-  provision:
-    name: 'Setup Azure Infrastructure'    
+  storageaccount:
+    name: 'Create storage account'    
     runs-on: ubuntu-latest    
 
     env:
       ResourceGroupName: 'rg-cc-funky-hotels-dev'
       ResourceGroupLocation: 'australiasoutheast'                  
-      EnvironmentName: 'dev'      
-      PlanSku: 'Y1'
-      PlanTier: 'Dynamic'
+      EnvironmentName: 'dev'     
 
     steps:      
-      - name: 'Create and deploy function app'
+      - name: 'Create storage account'
         uses: Cheranga/GitHubActions/storageaccount@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          deploymentName: '${{ github.run_number }}-sg${{env.FunctionAppName}}${{env.EnvironmentName}}'
+          deploymentName: '${{ github.run_number }}-sg-${{env.FunctionAppName}}${{env.EnvironmentName}}'
           resourceGroupName: ${{env.ResourceGroupName}}
           name: 'sg${{env.FunctionAppName}}${{env.EnvironmentName}}'
           location: ${{ env.ResourceGroupLocation }}
           storageType: 'nonprod'
+
+  appserviceplan:
+    name: 'Create app service plan'    
+    runs-on: ubuntu-latest    
+
+    env:
+      ResourceGroupName: 'rg-cc-funky-hotels-dev'
+      ResourceGroupLocation: 'australiasoutheast'                  
+      EnvironmentName: 'dev'     
+
+    steps:      
+      - name: 'Create app service plan'
+        uses: Cheranga/GitHubActions/appserviceplan@master
+        with:
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          deploymentName: '${{ github.run_number }}-asp-${{env.FunctionAppName}}${{env.EnvironmentName}}'
+          resourceGroupName: ${{env.ResourceGroupName}}
+          name: 'plan-${{env.FunctionAppName}}${{env.EnvironmentName}}'
+          location: ${{ env.ResourceGroupLocation }}
+          planType: 'nonprod'          
       
   #     - name: 'Create and deploy function app'
   #       uses: Cheranga/GitHubActions/createanddeployfunctionapp@master
