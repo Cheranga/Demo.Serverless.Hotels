@@ -12,59 +12,23 @@ on:
 env:
   PackagePath: './published'
   FunctionAppName: 'ccfunkyhotels'
+  ResourceGroupName: 'rg-cc-funky-hotels-dev'
+  ResourceGroupLocation: 'australiasoutheast'                    
 
 jobs:
-  storageaccount:
-    name: 'Create storage account'    
+  functionappdeployment:
+    name: 'Create function app with related resources'    
     runs-on: ubuntu-latest    
-
-    env:
-      ResourceGroupName: 'rg-cc-funky-hotels-dev'
-      ResourceGroupLocation: 'australiasoutheast'                  
-      EnvironmentName: 'dev'     
-
     steps:      
-      - name: 'Create storage account'
-        uses: Cheranga/GitHubActions/storageaccount@master
+      - name: 'Create and deploy function app'
+        uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          deploymentName: '${{ github.run_number }}-sg-${{env.FunctionAppName}}${{env.EnvironmentName}}'
-          resourceGroupName: ${{env.ResourceGroupName}}
-          name: 'sg${{env.FunctionAppName}}${{env.EnvironmentName}}'
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}          
+          environmentName: 'dev'          
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          functionAppName: ${{ env.FunctionAppName }}
           location: ${{ env.ResourceGroupLocation }}
-          storageType: 'nonprod'
-
-  appserviceplan:
-    name: 'Create app service plan'    
-    runs-on: ubuntu-latest    
-
-    env:
-      ResourceGroupName: 'rg-cc-funky-hotels-dev'
-      ResourceGroupLocation: 'australiasoutheast'                  
-      EnvironmentName: 'dev'     
-
-    steps:      
-      - name: 'Create app service plan'
-        uses: Cheranga/GitHubActions/appserviceplan@master
-        with:
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          deploymentName: '${{ github.run_number }}-asp-${{env.FunctionAppName}}${{env.EnvironmentName}}'
-          resourceGroupName: ${{env.ResourceGroupName}}
-          name: 'plan-${{env.FunctionAppName}}${{env.EnvironmentName}}'
-          location: ${{ env.ResourceGroupLocation }}
-          planType: 'nonprod'          
-      
-  #     - name: 'Create and deploy function app'
-  #       uses: Cheranga/GitHubActions/createanddeployfunctionapp@master
-  #       with:
-  #         credentials: ${{ secrets.AZURE_CREDENTIALS }}
-  #         dotnetVersion: '6.0.x'
-  #         environmentName: 'dev'          
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         functionAppName: ${{ env.FunctionAppName }}
-  #         location: ${{ env.ResourceGroupLocation }}
-  #         planTier: ${{ env.PlanTier }}
-  #         planSku: ${{ env.PlanSku }}
+          category: 'nonprod'
 
   # buildanddeploy:
   #   needs: provision
