@@ -20,32 +20,40 @@ jobs:
 
     env:
       ResourceGroupName: 'rg-cc-funky-hotels-dev'
-      ResourceGroupLocation: 'australiasoutheast'            
+      ResourceGroupLocation: 'australiasoutheast'                  
       EnvironmentName: 'dev'      
       PlanSku: 'Y1'
       PlanTier: 'Dynamic'
 
     steps:      
       - name: 'Create and deploy function app'
-        uses: Cheranga/GitHubActions/createanddeployfunctionapp@master
+        uses: Cheranga/GitHubActions/storageaccount@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          dotnetVersion: '6.0.x'
-          environmentName: 'dev'          
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          functionAppName: ${{ env.FunctionAppName }}
+          name: 'sg${{env.FunctionAppName}}${{env.EnvironmentName}}'
           location: ${{ env.ResourceGroupLocation }}
-          planTier: ${{ env.PlanTier }}
-          planSku: ${{ env.PlanSku }}
+          storageType: 'nonprod'
+      
+  #     - name: 'Create and deploy function app'
+  #       uses: Cheranga/GitHubActions/createanddeployfunctionapp@master
+  #       with:
+  #         credentials: ${{ secrets.AZURE_CREDENTIALS }}
+  #         dotnetVersion: '6.0.x'
+  #         environmentName: 'dev'          
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         functionAppName: ${{ env.FunctionAppName }}
+  #         location: ${{ env.ResourceGroupLocation }}
+  #         planTier: ${{ env.PlanTier }}
+  #         planSku: ${{ env.PlanSku }}
 
-  buildanddeploy:
-    needs: provision
-    name: 'Build and Deploy'
-    runs-on: ubuntu-latest      
-    steps:
-      - name: 'Build and Deploy the Function App'
-        uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
-        with:
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
-          dotnetVersion: '6.0.x'
-          functionAppName: '${{env.FunctionAppName}}dev'           
+  # buildanddeploy:
+  #   needs: provision
+  #   name: 'Build and Deploy'
+  #   runs-on: ubuntu-latest      
+  #   steps:
+  #     - name: 'Build and Deploy the Function App'
+  #       uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
+  #       with:
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         dotnetVersion: '6.0.x'
+  #         functionAppName: '${{env.FunctionAppName}}dev'           

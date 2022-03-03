@@ -49,4 +49,8 @@ https://blog.codingmilitia.com/2021/03/14/setting-up-demos-in-azure-part-2-githu
 
 [Mark Heath](https://markheath.net/post/azure-functions-bicep)
 
+* :bulb: Azure Bicep scope extension resources
+
+https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/scope-extension-resources
+
 
