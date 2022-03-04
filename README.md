@@ -59,6 +59,6 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/scope-extens
 
 https://ochzhen.com/blog/pass-array-and-numbers-as-secure-params
 
-* Passing objects
+* Passing objects with sensitive and non-sensitive settings
 
 
