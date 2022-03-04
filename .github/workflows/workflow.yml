@@ -25,6 +25,7 @@ jobs:
         with:
           deploymentName: 'testfunctionappsettings'
           resourceGroupName: ${{ env.ResourceGroupName }}
+          location: ${{ env.ResourceGroupLocation }}
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           functionAppName: 'ccfunkyhotelsdev'
           appSettings: ${{secrets.APP_SETTINGS}}
