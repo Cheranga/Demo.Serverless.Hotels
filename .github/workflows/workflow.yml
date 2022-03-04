@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Create key vault with secrets'
-        uses: Cheranga/GitHubActions/keyvaultwithsecrets
+        uses: Cheranga/GitHubActions/keyvaultwithsecrets@master
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           keyVaultName: 'kvcctestblah'
