@@ -53,4 +53,8 @@ https://blog.codingmilitia.com/2021/03/14/setting-up-demos-in-azure-part-2-githu
 
 https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/scope-extension-resources
 
+* :bulb: Passing arrays and objects as secure parameters
+
+https://ochzhen.com/blog/pass-array-and-numbers-as-secure-params
+
 
