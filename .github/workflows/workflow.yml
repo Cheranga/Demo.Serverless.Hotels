@@ -16,19 +16,31 @@ env:
   ResourceGroupLocation: 'australiasoutheast'                    
 
 jobs:
-  functionappdeployment:
-    name: 'Create function app with related resources'    
-    runs-on: ubuntu-latest    
-    steps:      
-      - name: 'Create and deploy function app'
-        uses: Cheranga/GitHubActions/vanillafunctionapp@master
+  testkeyvaultdeployment:
+    name: 'Create key vault with secrets'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Create key vault with secrets'
+        uses: Cheranga/GitHubActions/keyvaultwithsecrets
         with:
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}          
-          environmentName: 'dev'          
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          keyVaultName: 'kvcctestblah'
           resourceGroupName: ${{ env.ResourceGroupName }}
-          functionAppName: ${{ env.FunctionAppName }}
           location: ${{ env.ResourceGroupLocation }}
-          category: 'nonprod'
+          secretData: ${{secrets.SECRET_DATA}}
+  # functionappdeployment:
+  #   name: 'Create function app with related resources'    
+  #   runs-on: ubuntu-latest    
+  #   steps:      
+  #     - name: 'Create and deploy function app'
+  #       uses: Cheranga/GitHubActions/vanillafunctionapp@master
+  #       with:
+  #         credentials: ${{ secrets.AZURE_CREDENTIALS }}          
+  #         environmentName: 'dev'          
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         functionAppName: ${{ env.FunctionAppName }}
+  #         location: ${{ env.ResourceGroupLocation }}
+  #         category: 'nonprod'
 
   # buildanddeploy:
   #   needs: provision
