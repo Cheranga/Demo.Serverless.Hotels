@@ -16,18 +16,30 @@ env:
   ResourceGroupLocation: 'australiasoutheast'                    
 
 jobs:
-  testkeyvaultdeployment:
-    name: 'Create key vault with secrets'
+  functionAppWithSettings:
+    name: 'Update function app settings'
     runs-on: ubuntu-latest
     steps:
-      - name: 'Create key vault with secrets'
-        uses: Cheranga/GitHubActions/keyvaultwithsecrets@master
+      - name: 'Update function app settings'
+        uses: Cheranga/GitHubActions/functionappsettings@master
         with:
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
-          keyVaultName: 'kvcctestblah'
+          deploymentName: 'testfunctionappsettings'
           resourceGroupName: ${{ env.ResourceGroupName }}
-          location: ${{ env.ResourceGroupLocation }}
-          secretData: ${{secrets.SECRET_DATA}}
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          functionAppName: 'ccfunkyhotelsdev'
+          appSettings: ${{secrets.APP_SETTINGS}}
+  # testkeyvaultdeployment:
+  #   name: 'Create key vault with secrets'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: 'Create key vault with secrets'
+  #       uses: Cheranga/GitHubActions/keyvaultwithsecrets@master
+  #       with:
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         keyVaultName: 'kvcctestblah'
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         location: ${{ env.ResourceGroupLocation }}
+  #         secretData: ${{secrets.SECRET_DATA}}
   # functionappdeployment:
   #   name: 'Create function app with related resources'    
   #   runs-on: ubuntu-latest    
