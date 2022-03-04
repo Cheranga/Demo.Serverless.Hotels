@@ -47,6 +47,8 @@ https://blog.codingmilitia.com/2021/03/14/setting-up-demos-in-azure-part-2-githu
 
 * :bulb: Deploying an Azure function using Bicep
 
+This even contains how to deploy a function app to the `production`slot.
+
 [Mark Heath](https://markheath.net/post/azure-functions-bicep)
 
 * :bulb: Azure Bicep scope extension resources
