@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest    
     env:
       queues: 'xxx,yyy,zzz'
+      blobContainers: 'aaa,bbb,ccc,ddd'
     steps:
       - name: 'storage account with queue'
         uses: Cheranga/GitHubActions/storageaccount@master
@@ -32,6 +33,7 @@ jobs:
           location: ${{env.ResourceGroupLocation}}
           storageType: 'nonprod'
           queues: ${{ env.queues }}
+          blobContainers: ${{ env.blobContainers }}
 
 
   # functionAppWithSettings:
