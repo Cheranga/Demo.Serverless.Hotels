@@ -29,6 +29,7 @@ jobs:
           name: 'ccsgabcblah'          
           location: ${{env.ResourceGroupLocation}}
           storageType: 'nonprod'
+          queues: 'xxx,yyy,zzz'
 
 
   # functionAppWithSettings:
