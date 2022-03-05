@@ -92,6 +92,21 @@ jobs:
           storageType: 'nonprod'
           queues: ${{ env.queues }}
 
+  updatefunctionappsettings:
+    name: 'Update function app settings'
+    needs: storageAccountWithQueue
+    runs-on: ubuntu-latest        
+    steps:
+      - name: 'update functionapp settings'
+        uses: Cheranga/GitHubActions/functionappsettings@master
+        with:
+          deploymentName: '${{ github.run_number }}-update-functionapp-settings'
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          location: ${{env.ResourceGroupLocation}}
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          functionAppName: '${{ env.FunctionAppName }}dev'
+          appSettings: ${{ secrets.APP_SETTINGS }}          
+
   # buildanddeploy:
   #   needs: provision
   #   name: 'Build and Deploy'
