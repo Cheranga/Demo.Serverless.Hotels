@@ -76,8 +76,8 @@ jobs:
           category: 'nonprod'
 
   storageAccountWithQueue:
-    needs: functionappdeployment
     name: 'storage account with queue'
+    needs: functionappdeployment
     runs-on: ubuntu-latest    
     env:
       queues: 'hotel-cancellations'
