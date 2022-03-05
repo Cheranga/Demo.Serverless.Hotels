@@ -20,7 +20,7 @@ jobs:
     name: 'storage account with queue'
     runs-on: ubuntu-latest
     env:
-      queues: 'abc,def,ghi'
+      queues: 'abc-def-ghi'
     steps:
       - name: 'storage account with queue'
         uses: Cheranga/GitHubActions/storageaccount@master
