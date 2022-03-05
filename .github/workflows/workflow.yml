@@ -19,6 +19,8 @@ jobs:
   storageAccountWithQueue:
     name: 'storage account with queue'
     runs-on: ubuntu-latest
+    env:
+      queues: 'xxx,yyy,zzz'
     steps:
       - name: 'storage account with queue'
         uses: Cheranga/GitHubActions/storageaccount@master
@@ -29,7 +31,7 @@ jobs:
           name: 'ccsgabcblah'          
           location: ${{env.ResourceGroupLocation}}
           storageType: 'nonprod'
-          queues: 'xxx,yyy,zzz'
+          queues: ${{ env.queues }}
 
 
   # functionAppWithSettings:
