@@ -59,7 +59,7 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/scope-extens
 
 https://ochzhen.com/blog/pass-array-and-numbers-as-secure-params
 
-* Creating a function app slot which will contain both sensitive and non-sensitive data
+* :bulb: Creating a function app slot which will contain both sensitive and non-sensitive data
 
 If you would like to use GitHub actions, the preferred way is to create a data structure and use that to provision the slot with production and non production slots.
 
@@ -67,11 +67,19 @@ From GitHub actions you cannot pass "`object`" data to actions. So you will need
 
 [Reference](https://github.com/Azure/bicep/discussions/6104)
 
-* Provisioning queues inside a storage account using Bicep
+* :bulb: Provisioning queues inside a storage account using Bicep
 
 In here we need to correctly set the name and the type of the child resources we are deploying. Since queue is a child resource of a storage account, either you can create them at the time you are deploying the storage account, or separately if the storage account is created earlier
 
 [How to](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/child-resource-name-type)
+
+* :bulb: Azure Bicep examples
+
+[examples from Azure GitHub](https://github.com/Azure/bicep/tree/main/docs/examples/101)
+
+* :bulb: Merging appsettings with Bicep
+
+[merging settings](http://blog.dotnetstudio.nl/posts/2021/04/merge-appsettings-with-bicep/)
 
 
 
