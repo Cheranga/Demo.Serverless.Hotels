@@ -20,7 +20,7 @@ jobs:
     name: 'storage account with queue'
     runs-on: ubuntu-latest
     env:
-      queues: 'abc-def-ghi'
+      queues: 'xxx, yyy, zzz'
     steps:
       - name: 'storage account with queue'
         uses: Cheranga/GitHubActions/storageaccount@master
@@ -34,19 +34,19 @@ jobs:
           queues: ${{ env.queues }}
 
 
-  # functionAppWithSettings:
-  #   name: 'Update function app settings'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: 'Update function app settings'
-  #       uses: Cheranga/GitHubActions/functionappsettings@master
-  #       with:
-  #         deploymentName: 'testfunctionappsettings'
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         location: ${{ env.ResourceGroupLocation }}
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         functionAppName: 'ccfunkyhotelsdev'
-  #         appSettings: ${{secrets.APP_SETTINGS}}
+  functionAppWithSettings:
+    name: 'Update function app settings'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Update function app settings'
+        uses: Cheranga/GitHubActions/functionappsettings@master
+        with:
+          deploymentName: 'testfunctionappsettings'
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          location: ${{ env.ResourceGroupLocation }}
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          functionAppName: 'ccfunkyhotelsdev'
+          appSettings: ${{secrets.APP_SETTINGS}}
   # testkeyvaultdeployment:
   #   name: 'Create key vault with secrets'
   #   runs-on: ubuntu-latest
