@@ -88,7 +88,7 @@ jobs:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
           resourceGroupName: ${{ env.ResourceGroupName }}
-          name: 'sgcc${{ env.FunctionAppName }}dev'          
+          name: 'sg${{ env.FunctionAppName }}dev'          
           location: ${{env.ResourceGroupLocation}}
           storageType: 'nonprod'
           queues: ${{ env.queues }}
