@@ -82,7 +82,8 @@ jobs:
       - name: 'Create and deploy function app'
         uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}          
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}    
+          deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
           environmentName: 'dev'          
           resourceGroupName: ${{ env.ResourceGroupName }}
           functionAppName: ${{ env.FunctionAppName }}
@@ -100,7 +101,7 @@ jobs:
         uses: Cheranga/GitHubActions/storageaccount@master
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
-          deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
+          deploymentName: '${{ github.run_number }}-storage-account-updates'
           resourceGroupName: ${{ env.ResourceGroupName }}
           name: 'sg${{ env.FunctionAppName }}dev'          
           location: ${{env.ResourceGroupLocation}}
