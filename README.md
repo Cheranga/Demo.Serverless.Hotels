@@ -67,5 +67,7 @@ From GitHub actions you cannot pass "`object`" data to actions. So you will need
 
 [Reference](https://github.com/Azure/bicep/discussions/6104)
 
+* Passing parameters as comma separated strings
+
 
 
