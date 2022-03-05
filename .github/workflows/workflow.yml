@@ -107,14 +107,14 @@ jobs:
           functionAppName: '${{ env.FunctionAppName }}dev'
           appSettings: ${{ secrets.APP_SETTINGS }}          
 
-  # buildanddeploy:
-  #   needs: provision
-  #   name: 'Build and Deploy'
-  #   runs-on: ubuntu-latest      
-  #   steps:
-  #     - name: 'Build and Deploy the Function App'
-  #       uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
-  #       with:
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         dotnetVersion: '6.0.x'
-  #         functionAppName: '${{env.FunctionAppName}}dev'           
+  buildanddeploy:
+    needs: provision
+    name: 'Build and Deploy'
+    runs-on: ubuntu-latest      
+    steps:
+      - name: 'Build and Deploy the Function App'
+        uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
+        with:
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          dotnetVersion: '6.0.x'
+          functionAppName: '${{ env.FunctionAppName }}dev'        
