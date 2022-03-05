@@ -108,7 +108,7 @@ jobs:
           appSettings: ${{ secrets.APP_SETTINGS }}          
 
   buildanddeploy:
-    needs: provision
+    needs: updatefunctionappsettings
     name: 'Build and Deploy'
     runs-on: ubuntu-latest      
     steps:
