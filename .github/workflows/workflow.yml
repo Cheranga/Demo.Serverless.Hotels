@@ -16,19 +16,31 @@ env:
   ResourceGroupLocation: 'australiasoutheast'                    
 
 jobs:
-  functionAppWithSettings:
-    name: 'Update function app settings'
+  storageAccountWithQueue:
+    name: 'storage account with queue'
     runs-on: ubuntu-latest
     steps:
-      - name: 'Update function app settings'
-        uses: Cheranga/GitHubActions/functionappsettings@master
+      - name: 'storage account with queue'
+        uses: Cheranga/GitHubActions/storageaccount@master
         with:
-          deploymentName: 'testfunctionappsettings'
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          location: ${{ env.ResourceGroupLocation }}
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
-          functionAppName: 'ccfunkyhotelsdev'
-          appSettings: ${{secrets.APP_SETTINGS}}
+          name: 'ccsgabcblah'
+          location: ${{env.ResourceGroupLocation}}
+          storageType: 'nonprod'
+
+
+  # functionAppWithSettings:
+  #   name: 'Update function app settings'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: 'Update function app settings'
+  #       uses: Cheranga/GitHubActions/functionappsettings@master
+  #       with:
+  #         deploymentName: 'testfunctionappsettings'
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         location: ${{ env.ResourceGroupLocation }}
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         functionAppName: 'ccfunkyhotelsdev'
+  #         appSettings: ${{secrets.APP_SETTINGS}}
   # testkeyvaultdeployment:
   #   name: 'Create key vault with secrets'
   #   runs-on: ubuntu-latest
