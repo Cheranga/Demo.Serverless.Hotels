@@ -75,42 +75,42 @@ jobs:
   #         secretData: ${{secrets.SECRET_DATA}}
 
 
-  functionappdeployment:
-    name: 'Create function app with related resources'    
-    runs-on: ubuntu-latest    
-    steps:      
-      - name: 'Create and deploy function app'
-        uses: Cheranga/GitHubActions/vanillafunctionapp@master
-        with:
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}    
-          deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
-          environmentName: 'dev'          
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          functionAppName: ${{ env.FunctionAppName }}
-          location: ${{ env.ResourceGroupLocation }}
-          category: 'nonprod'
+  # functionappdeployment:
+  #   name: 'Create function app with related resources'    
+  #   runs-on: ubuntu-latest    
+  #   steps:      
+  #     - name: 'Create and deploy function app'
+  #       uses: Cheranga/GitHubActions/vanillafunctionapp@master
+  #       with:
+  #         credentials: ${{ secrets.AZURE_CREDENTIALS }}    
+  #         deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
+  #         environmentName: 'dev'          
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         functionAppName: ${{ env.FunctionAppName }}
+  #         location: ${{ env.ResourceGroupLocation }}
+  #         category: 'nonprod'
 
-  storageAccountWithQueue:
-    name: 'storage account with queue'
-    needs: functionappdeployment
-    runs-on: ubuntu-latest    
-    env:
-      queues: 'hotel-cancellations'
-    steps:
-      - name: 'storage account with queue'
-        uses: Cheranga/GitHubActions/storageaccount@master
-        with:
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
-          deploymentName: '${{ github.run_number }}-storage-account-updates'
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          name: 'sg${{ env.FunctionAppName }}dev'          
-          location: ${{env.ResourceGroupLocation}}
-          storageType: 'nonprod'
-          queues: ${{ env.queues }}
+  # storageAccountWithQueue:
+  #   name: 'storage account with queue'
+  #   needs: functionappdeployment
+  #   runs-on: ubuntu-latest    
+  #   env:
+  #     queues: 'hotel-cancellations'
+  #   steps:
+  #     - name: 'storage account with queue'
+  #       uses: Cheranga/GitHubActions/storageaccount@master
+  #       with:
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         deploymentName: '${{ github.run_number }}-storage-account-updates'
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         name: 'sg${{ env.FunctionAppName }}dev'          
+  #         location: ${{env.ResourceGroupLocation}}
+  #         storageType: 'nonprod'
+  #         queues: ${{ env.queues }}
 
   updatefunctionappsettings:
     name: 'Update function app settings'
-    needs: storageAccountWithQueue
+    # needs: storageAccountWithQueue
     runs-on: ubuntu-latest        
     steps:
       - name: 'update functionapp settings'
