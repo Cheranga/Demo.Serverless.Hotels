@@ -16,23 +16,23 @@ env:
   ResourceGroupLocation: 'australiasoutheast'                    
 
 jobs:
-  storageAccountWithQueue:
-    name: 'storage account with queue'
-    runs-on: ubuntu-latest    
-    env:
-      queues: 'hotel-cancellations'
-    steps:
-      - name: 'storage account with queue'
-        uses: Cheranga/GitHubActions/storageaccount@master
-        with:
-          credentials: ${{secrets.AZURE_CREDENTIALS}}
-          deploymentName: 'teststorageaccountwithqueues'
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          name: 'sgccfunkyhotelsdev'          
-          location: ${{env.ResourceGroupLocation}}
-          storageType: 'nonprod'
-          queues: ${{ env.queues }}
-          blobContainers: ${{ env.blobContainers }}
+  # storageAccountWithQueue:
+  #   name: 'storage account with queue'
+  #   runs-on: ubuntu-latest    
+  #   env:
+  #     queues: 'hotel-cancellations'
+  #   steps:
+  #     - name: 'storage account with queue'
+  #       uses: Cheranga/GitHubActions/storageaccount@master
+  #       with:
+  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
+  #         deploymentName: 'teststorageaccountwithqueues'
+  #         resourceGroupName: ${{ env.ResourceGroupName }}
+  #         name: 'sgccfunkyhotelsdev'          
+  #         location: ${{env.ResourceGroupLocation}}
+  #         storageType: 'nonprod'
+  #         queues: ${{ env.queues }}
+  #         blobContainers: ${{ env.blobContainers }}
 
 
   # functionAppWithSettings:
@@ -60,37 +60,37 @@ jobs:
   #         resourceGroupName: ${{ env.ResourceGroupName }}
   #         location: ${{ env.ResourceGroupLocation }}
   #         secretData: ${{secrets.SECRET_DATA}}
-  # functionappdeployment:
-  #   name: 'Create function app with related resources'    
-  #   runs-on: ubuntu-latest    
-  #   steps:      
-  #     - name: 'Create and deploy function app'
-  #       uses: Cheranga/GitHubActions/vanillafunctionapp@master
-  #       with:
-  #         credentials: ${{ secrets.AZURE_CREDENTIALS }}          
-  #         environmentName: 'dev'          
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         functionAppName: ${{ env.FunctionAppName }}
-  #         location: ${{ env.ResourceGroupLocation }}
-  #         category: 'nonprod'
+  functionappdeployment:
+    name: 'Create function app with related resources'    
+    runs-on: ubuntu-latest    
+    steps:      
+      - name: 'Create and deploy function app'
+        uses: Cheranga/GitHubActions/vanillafunctionapp@master
+        with:
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}          
+          environmentName: 'dev'          
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          functionAppName: ${{ env.FunctionAppName }}
+          location: ${{ env.ResourceGroupLocation }}
+          category: 'nonprod'
 
-  # storageAccountWithQueue:
-  #   name: 'storage account with queue'
-  #   needs: functionappdeployment
-  #   runs-on: ubuntu-latest    
-  #   env:
-  #     queues: 'hotel-cancellations'
-  #   steps:
-  #     - name: 'storage account with queue'
-  #       uses: Cheranga/GitHubActions/storageaccount@master
-  #       with:
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         name: 'sg${{ env.FunctionAppName }}dev'          
-  #         location: ${{env.ResourceGroupLocation}}
-  #         storageType: 'nonprod'
-  #         queues: ${{ env.queues }}
+  storageAccountWithQueue:
+    name: 'storage account with queue'
+    needs: functionappdeployment
+    runs-on: ubuntu-latest    
+    env:
+      queues: 'hotel-cancellations'
+    steps:
+      - name: 'storage account with queue'
+        uses: Cheranga/GitHubActions/storageaccount@master
+        with:
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          name: 'sg${{ env.FunctionAppName }}dev'          
+          location: ${{env.ResourceGroupLocation}}
+          storageType: 'nonprod'
+          queues: ${{ env.queues }}
 
   # buildanddeploy:
   #   needs: provision
