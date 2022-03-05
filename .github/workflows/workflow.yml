@@ -24,6 +24,7 @@ jobs:
         uses: Cheranga/GitHubActions/storageaccount@master
         with:
           name: 'ccsgabcblah'
+          resourceGroupName: ${{ env.ResourceGroupName }}
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           location: ${{env.ResourceGroupLocation}}
           storageType: 'nonprod'
