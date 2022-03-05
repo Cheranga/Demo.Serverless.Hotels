@@ -59,6 +59,12 @@ https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/scope-extens
 
 https://ochzhen.com/blog/pass-array-and-numbers-as-secure-params
 
-* Passing objects with sensitive and non-sensitive settings
+* Creating a function app slot which will contain both sensitive and non-sensitive data
+
+If you would like to use GitHub actions, the preferred way is to create a data structure and use that to provision the slot with production and non production slots.
+
+From GitHub actions you cannot pass "`object`" data to actions. So you will need to pass the object as a string parameter to the custom action. Doing this is somewhat tedious to be honest, but once you create the JSON data structure you need to stringify it. This [site](https://onlinetexttools.com/json-stringify-text) will help you do that much easily.
+
+
 
 
