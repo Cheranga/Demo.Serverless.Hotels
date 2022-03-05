@@ -67,7 +67,11 @@ From GitHub actions you cannot pass "`object`" data to actions. So you will need
 
 [Reference](https://github.com/Azure/bicep/discussions/6104)
 
-* Passing parameters as comma separated strings
+* Provisioning queues inside a storage account using Bicep
+
+In here we need to correctly set the name and the type of the child resources we are deploying. Since queue is a child resource of a storage account, either you can create them at the time you are deploying the storage account, or separately if the storage account is created earlier
+
+[How to](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/child-resource-name-type)
 
 
 
