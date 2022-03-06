@@ -74,7 +74,7 @@ jobs:
   #         secretData: ${{secrets.SECRET_DATA}}
 
   provisionresources:    
-    uses: ./github.workflows/provisionresources.yml
+    uses: Cheranga/toy-website-environments/.github/workflows/provisionresources.yml@feature/steps_with_custom_actions
     with:      
       environmentName: dev
       functionAppName: ccfunkyhotels
