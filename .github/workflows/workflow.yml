@@ -32,7 +32,7 @@ jobs:
           location: ${{ env.ResourceGroupLocation }}
           category: 'nonprod'
       
-      - name: Create storage queue - {{env.queues}}
+      - name: Create storage queue
         uses: Cheranga/GitHubActions/storageaccount@master          
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
@@ -43,7 +43,7 @@ jobs:
           storageType: nonprod
           queues: ${{ env.queues }}
   
-      - name: Provide ${{env.FunctionAppName}} to access ${{env.queues}} based on RBAC
+      - name: Provide function app to access queue based on RBAC
         uses: Cheranga/GitHubActions/assignrbactostorage@master
         with:
           deploymentName: ${{ github.run_number }}-assign-rbac
@@ -54,7 +54,7 @@ jobs:
           friendlyName: ${{ env.FunctionAppName }}
           functionAppName: ${{ env.FunctionAppName }}dev
   
-      - name: Update app settings of ${{env.FunctionAppName}}
+      - name: Update function app settings
         uses: Cheranga/GitHubActions/functionappsettings@master
         with:
           deploymentName: ${{ github.run_number }}-update-functionapp-settings
@@ -64,7 +64,7 @@ jobs:
           functionAppName: ${{ env.FunctionAppName }}dev
           appSettings: ${{ secrets.APP_SETTINGS }}
 
-      - name: Deploy code to ${{env.FunctionAppName}}
+      - name: Deploy code to function app
         uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
