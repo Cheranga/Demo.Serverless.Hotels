@@ -31,7 +31,7 @@ jobs:
         uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
           credentials: ${{ secrets.credentials }}
-          deploymentName: "${{ github.run_number }}-${{ inputs.functionAppName }}"
+          deploymentName: ${{ github.run_number }}-${{ inputs.functionAppName }}
           environmentName: ${{inputs.environment}}
           resourceGroupName: ${{ inputs.resourceGroupName }}
           functionAppName: ${{ inputs.functionAppName }}
