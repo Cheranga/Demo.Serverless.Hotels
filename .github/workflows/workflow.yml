@@ -90,7 +90,7 @@ jobs:
           location: ${{ env.ResourceGroupLocation }}
           category: 'nonprod'
 
-  storageAccountWithQueue:
+  storageaccountwithqueue:
     name: 'storage account with queue'
     needs: functionappdeployment
     runs-on: ubuntu-latest    
@@ -110,7 +110,7 @@ jobs:
 
   assignrbac:
     name: 'Assign RBAC'
-    needs: storageAccountWithQueue
+    needs: storageaccountwithqueue
     runs-on: ubuntu-latest        
     steps:
       - name: 'Assign RBAC'
@@ -126,7 +126,7 @@ jobs:
 
   updatefunctionappsettings:
     name: 'Update function app settings'
-    needs: functionappdeployment
+    needs: assignrbac
     runs-on: ubuntu-latest        
     steps:
       - name: 'update functionapp settings'
