@@ -76,13 +76,13 @@ jobs:
   lint:
     uses: Cheranga/Demo.Serverless.Hotels/.github/workflows/provisionresources.yml@feature/steps_with_custom_actions
     with:
-      environmentName: 'dev'
-      functionAppName: ${{env.FunctionAppName}}
-      resourceGroupName: ${{env.ResourceGroupName}}
-      location: ${{env.ResourceGroupLocation}}
-      category: 'nonprod'
+      environmentName: dev
+      functionAppName: ${{ env.FunctionAppName }}
+      resourceGroupName: ${{ env.ResourceGroupName }}
+      location: ${{ env.ResourceGroupLocation }}
+      category: nonprod
     secrets:
-      credentials: ${{secrets.AZURE_CREDENTIALS}}
+      credentials: ${{ secrets.AZURE_CREDENTIALS }}
   # functionappdeployment:
   #   name: 'Create function app with related resources'
   #   runs-on: ubuntu-latest
