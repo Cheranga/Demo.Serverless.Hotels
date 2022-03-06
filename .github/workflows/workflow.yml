@@ -90,23 +90,39 @@ jobs:
           location: ${{ env.ResourceGroupLocation }}
           category: 'nonprod'
 
-  # storageAccountWithQueue:
-  #   name: 'storage account with queue'
-  #   needs: functionappdeployment
-  #   runs-on: ubuntu-latest    
-  #   env:
-  #     queues: 'hotel-cancellations'
-  #   steps:
-  #     - name: 'storage account with queue'
-  #       uses: Cheranga/GitHubActions/storageaccount@master
-  #       with:
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         deploymentName: '${{ github.run_number }}-storage-account-updates'
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         name: 'sg${{ env.FunctionAppName }}dev'          
-  #         location: ${{env.ResourceGroupLocation}}
-  #         storageType: 'nonprod'
-  #         queues: ${{ env.queues }}
+  storageAccountWithQueue:
+    name: 'storage account with queue'
+    needs: functionappdeployment
+    runs-on: ubuntu-latest    
+    env:
+      queues: 'hotel-cancellations'
+    steps:
+      - name: 'storage account with queue'
+        uses: Cheranga/GitHubActions/storageaccount@master
+        with:
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          deploymentName: '${{ github.run_number }}-storage-account-updates'
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          name: 'sg${{ env.FunctionAppName }}dev'          
+          location: ${{env.ResourceGroupLocation}}
+          storageType: 'nonprod'
+          queues: ${{ env.queues }}
+
+  assignrbac:
+    name: 'Assign RBAC'
+    needs: storageAccountWithQueue
+    runs-on: ubuntu-latest        
+    steps:
+      - name: 'Assign RBAC'
+        uses: Cheranga/GitHubActions/assignrbactostorage@master
+        with:
+          deploymentName: '${{ github.run_number }}-assign-rbac'
+          resourceGroupName: ${{ env.ResourceGroupName }}          
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          storageAccountName: 'sg${{ env.FunctionAppName }}dev' 
+          accessibility: 'queue_read_write'
+          friendlyName: ${{ env.FunctionAppName }}
+          functionAppName: '${{ env.FunctionAppName }}dev'
 
   updatefunctionappsettings:
     name: 'Update function app settings'
@@ -121,16 +137,18 @@ jobs:
           location: ${{env.ResourceGroupLocation}}
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           functionAppName: '${{ env.FunctionAppName }}dev'
-          appSettings: ${{ secrets.APP_SETTINGS }}          
+          appSettings: ${{ secrets.APP_SETTINGS }}    
 
-  # buildanddeploy:
-  #   needs: updatefunctionappsettings
-  #   name: 'Build and Deploy'
-  #   runs-on: ubuntu-latest      
-  #   steps:
-  #     - name: 'Build and Deploy the Function App'
-  #       uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
-  #       with:
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         dotnetVersion: '6.0.x'
-  #         functionAppName: '${{ env.FunctionAppName }}dev'        
+                 
+
+  buildanddeploy:
+    needs: updatefunctionappsettings
+    name: 'Build and Deploy'
+    runs-on: ubuntu-latest      
+    steps:
+      - name: 'Build and Deploy the Function App'
+        uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
+        with:
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          dotnetVersion: '6.0.x'
+          functionAppName: '${{ env.FunctionAppName }}dev'        
