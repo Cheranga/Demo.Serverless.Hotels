@@ -37,3 +37,21 @@ jobs:
           functionAppName: ${{ inputs.functionAppName }}
           location: ${{ inputs.location }}
           category: ${{ inputs.category }}
+
+  storageaccountwithqueue:
+    name: "storage account with queue"
+    needs: provisionresources
+    runs-on: ubuntu-latest
+    env:
+      queues: "hotel-cancellations"
+    steps:
+      - name: "storage account with queue"
+        uses: Cheranga/GitHubActions/storageaccount@master
+        with:
+          credentials: ${{secrets.credentials}}
+          deploymentName: ${{ github.run_number }}-storage-account-updates
+          resourceGroupName: ${{ inputs.resourceGroupName }}
+          name: sg${{ inputs.functionAppName }}${{inputs.environment}}
+          location: ${{inputs.location}}
+          storageType: nonprod
+          queues: ${{ env.queues }}          
