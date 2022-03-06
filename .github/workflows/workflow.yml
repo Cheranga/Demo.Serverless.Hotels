@@ -78,7 +78,7 @@ jobs:
     name: Provision Resources
     with:      
       environmentName: dev
-      functionAppName: ${{env.FunctionAppName}}
+      functionAppName: ccfunkyhotels
       resourceGroupName: rg-cc-funky-hotels-dev
       location: australiasoutheast
       category: nonprod
