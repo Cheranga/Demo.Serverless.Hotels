@@ -14,13 +14,14 @@ env:
   FunctionAppName: "ccfunkyhotels"
   ResourceGroupName: "rg-cc-funky-hotels-dev"
   ResourceGroupLocation: "australiasoutheast"
+  queues: hotel-cancellations
 
 jobs:
   pipeline:
-    name: Build and Deploy Function App
+    name: Build and Deploy ${{env.FunctionAppName}}
     runs-on: ubuntu-latest
     steps:
-      - name: Provision Azure Resources
+      - name: Provision Azure resources for a vanilla function app
         uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
@@ -31,10 +32,8 @@ jobs:
           location: ${{ env.ResourceGroupLocation }}
           category: 'nonprod'
       
-      - name: Setup storage queue
-        uses: Cheranga/GitHubActions/storageaccount@master
-        env:
-          queues: hotel-cancellations
+      - name: Create storage queue - {{env.queues}}
+        uses: Cheranga/GitHubActions/storageaccount@master          
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           deploymentName: ${{ github.run_number }}-storage-account-updates
@@ -44,7 +43,7 @@ jobs:
           storageType: nonprod
           queues: ${{ env.queues }}
   
-      - name: Assign access to the storage queue
+      - name: Provide ${{env.FunctionAppName}} to access ${{env.queues}} based on RBAC
         uses: Cheranga/GitHubActions/assignrbactostorage@master
         with:
           deploymentName: ${{ github.run_number }}-assign-rbac
@@ -54,9 +53,8 @@ jobs:
           accessibility: queue_read_write
           friendlyName: ${{ env.FunctionAppName }}
           functionAppName: ${{ env.FunctionAppName }}dev
-
   
-      - name: Update function app settings
+      - name: Update app settings of ${{env.FunctionAppName}}
         uses: Cheranga/GitHubActions/functionappsettings@master
         with:
           deploymentName: ${{ github.run_number }}-update-functionapp-settings
@@ -66,7 +64,7 @@ jobs:
           functionAppName: ${{ env.FunctionAppName }}dev
           appSettings: ${{ secrets.APP_SETTINGS }}
 
-      - name: Deploy function app code
+      - name: Deploy code to ${{env.FunctionAppName}}
         uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
