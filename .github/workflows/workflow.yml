@@ -99,23 +99,23 @@ jobs:
   #         location: ${{ env.ResourceGroupLocation }}
   #         category: 'nonprod'
 
-  # storageaccountwithqueue:
-  #   name: "storage account with queue"
-  #   needs: provisionresources
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     queues: "hotel-cancellations"
-  #   steps:
-  #     - name: "storage account with queue"
-  #       uses: Cheranga/GitHubActions/storageaccount@master
-  #       with:
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         deploymentName: "${{ github.run_number }}-storage-account-updates"
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         name: "sg${{ env.FunctionAppName }}dev"
-  #         location: ${{env.ResourceGroupLocation}}
-  #         storageType: "nonprod"
-  #         queues: ${{ env.queues }}
+  storageaccountwithqueue:
+    name: "storage account with queue"
+    needs: provisionresources
+    runs-on: ubuntu-latest
+    env:
+      queues: "hotel-cancellations"
+    steps:
+      - name: "storage account with queue"
+        uses: Cheranga/GitHubActions/storageaccount@master
+        with:
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          deploymentName: "${{ github.run_number }}-storage-account-updates"
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          name: "sg${{ env.FunctionAppName }}dev"
+          location: ${{env.ResourceGroupLocation}}
+          storageType: "nonprod"
+          queues: ${{ env.queues }}
 
   # assignrbac:
   #   name: "Assign RBAC"
