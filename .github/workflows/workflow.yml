@@ -10,10 +10,10 @@ on:
   workflow_dispatch:
 
 env:
-  PackagePath: "./published"
-  FunctionAppName: "ccfunkyhotels"
-  ResourceGroupName: "rg-cc-funky-hotels-dev"
-  ResourceGroupLocation: "australiasoutheast"
+  PackagePath: ./published
+  FunctionAppName: ccfunkyhotels
+  ResourceGroupName: rg-cc-funky-hotels-dev
+  ResourceGroupLocation: australiasoutheast
   queues: hotel-cancellations
 
 jobs:
@@ -25,12 +25,12 @@ jobs:
         uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
-          environmentName: 'dev'
+          deploymentName: ${{ github.run_number }}-${{ env.FunctionAppName }}
+          environmentName: dev
           resourceGroupName: ${{ env.ResourceGroupName }}
           functionAppName: ${{ env.FunctionAppName }}
           location: ${{ env.ResourceGroupLocation }}
-          category: 'nonprod'
+          category: nonprod
       
       - name: Create storage queue
         uses: Cheranga/GitHubActions/storageaccount@master          
