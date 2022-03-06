@@ -18,7 +18,7 @@ env:
 
 jobs:
   pipeline:
-    name: Build and Deploy ${{env.FunctionAppName}}
+    name: 'Build and Deploy ${{env.FunctionAppName}}'
     runs-on: ubuntu-latest
     steps:
       - name: Provision Azure resources for a vanilla function app
