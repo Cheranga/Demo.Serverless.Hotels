@@ -76,6 +76,7 @@ jobs:
   provisionresources:    
     # uses: Cheranga/Demo.Serverless.Hotels/.github/workflows/provisionresources.yml@feature/steps_with_custom_actions    
     uses: ./.github/workflows/provisionresources.yml
+    name: Provision Resources
     with:      
       environmentName: dev
       functionAppName: ccfunkyhotels
