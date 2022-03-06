@@ -74,7 +74,7 @@ jobs:
   #         secretData: ${{secrets.SECRET_DATA}}
 
   lint:
-    uses: Cheranga/Demo.Serverless.Hotels/.github/workflows/provisionresources.yml
+    uses: Cheranga/Demo.Serverless.Hotels/.github/workflows/provisionresources.yml@steps_with_custom_actions
     with:
       functionAppName: ${{env.FunctionAppName}}
       resourceGroupName: ${{env.ResourceGroupName}}
