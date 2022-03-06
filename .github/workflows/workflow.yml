@@ -73,35 +73,35 @@ jobs:
   #         location: ${{ env.ResourceGroupLocation }}
   #         secretData: ${{secrets.SECRET_DATA}}
 
-  provisionresources:        
-    uses: ./.github/workflows/provisionresources.yml
-    name: Provision Resources    
-    with:      
-      environmentName: dev
-      functionAppName: ccfunkyhotels
-      resourceGroupName: rg-cc-funky-hotels-dev
-      location: australiasoutheast
-      category: nonprod
-    secrets:
-      credentials: ${{ secrets.AZURE_CREDENTIALS }}
-  # functionappdeployment:
-  #   name: 'Create function app with related resources'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: 'Create and deploy function app'
-  #       uses: Cheranga/GitHubActions/vanillafunctionapp@master
-  #       with:
-  #         credentials: ${{ secrets.AZURE_CREDENTIALS }}
-  #         deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
-  #         environmentName: 'dev'
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         functionAppName: ${{ env.FunctionAppName }}
-  #         location: ${{ env.ResourceGroupLocation }}
-  #         category: 'nonprod'
+  # provisionresources:        
+  #   uses: ./.github/workflows/provisionresources.yml
+  #   name: Provision Resources    
+  #   with:      
+  #     environmentName: dev
+  #     functionAppName: ccfunkyhotels
+  #     resourceGroupName: rg-cc-funky-hotels-dev
+  #     location: australiasoutheast
+  #     category: nonprod
+  #   secrets:
+  #     credentials: ${{ secrets.AZURE_CREDENTIALS }}
+  functionappdeployment:
+    name: 'Create function app with related resources'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Create and deploy function app'
+        uses: Cheranga/GitHubActions/vanillafunctionapp@master
+        with:
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          deploymentName: '${{ github.run_number }}-${{ env.FunctionAppName }}'
+          environmentName: 'dev'
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          functionAppName: ${{ env.FunctionAppName }}
+          location: ${{ env.ResourceGroupLocation }}
+          category: 'nonprod'
 
   storageaccountwithqueue:
     name: "storage account with queue"
-    needs: provisionresources
+    needs: functionappdeployment
     runs-on: ubuntu-latest
     env:
       queues: "hotel-cancellations"
@@ -117,45 +117,45 @@ jobs:
           storageType: "nonprod"
           queues: ${{ env.queues }}
 
-  # assignrbac:
-  #   name: "Assign RBAC"
-  #   needs: storageaccountwithqueue
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: "Assign RBAC"
-  #       uses: Cheranga/GitHubActions/assignrbactostorage@master
-  #       with:
-  #         deploymentName: "${{ github.run_number }}-assign-rbac"
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         storageAccountName: "sg${{ env.FunctionAppName }}dev"
-  #         accessibility: "queue_read_write"
-  #         friendlyName: ${{ env.FunctionAppName }}
-  #         functionAppName: "${{ env.FunctionAppName }}dev"
+  assignrbac:
+    name: "Assign RBAC"
+    needs: storageaccountwithqueue
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Assign RBAC"
+        uses: Cheranga/GitHubActions/assignrbactostorage@master
+        with:
+          deploymentName: "${{ github.run_number }}-assign-rbac"
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          storageAccountName: "sg${{ env.FunctionAppName }}dev"
+          accessibility: "queue_read_write"
+          friendlyName: ${{ env.FunctionAppName }}
+          functionAppName: "${{ env.FunctionAppName }}dev"
 
-  # updatefunctionappsettings:
-  #   name: "Update function app settings"
-  #   needs: assignrbac
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: "update functionapp settings"
-  #       uses: Cheranga/GitHubActions/functionappsettings@master
-  #       with:
-  #         deploymentName: "${{ github.run_number }}-update-functionapp-settings"
-  #         resourceGroupName: ${{ env.ResourceGroupName }}
-  #         location: ${{env.ResourceGroupLocation}}
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         functionAppName: "${{ env.FunctionAppName }}dev"
-  #         appSettings: ${{ secrets.APP_SETTINGS }}
+  updatefunctionappsettings:
+    name: "Update function app settings"
+    needs: assignrbac
+    runs-on: ubuntu-latest
+    steps:
+      - name: "update functionapp settings"
+        uses: Cheranga/GitHubActions/functionappsettings@master
+        with:
+          deploymentName: "${{ github.run_number }}-update-functionapp-settings"
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          location: ${{env.ResourceGroupLocation}}
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          functionAppName: "${{ env.FunctionAppName }}dev"
+          appSettings: ${{ secrets.APP_SETTINGS }}
 
-  # buildanddeploy:
-  #   needs: updatefunctionappsettings
-  #   name: "Build and Deploy"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: "Build and Deploy the Function App"
-  #       uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
-  #       with:
-  #         credentials: ${{secrets.AZURE_CREDENTIALS}}
-  #         dotnetVersion: "6.0.x"
-  #         functionAppName: "${{ env.FunctionAppName }}dev"
+  buildanddeploy:
+    needs: updatefunctionappsettings
+    name: "Build and Deploy"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Build and Deploy the Function App"
+        uses: Cheranga/GitHubActions/deploydotnetfunctionapp@master
+        with:
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          dotnetVersion: "6.0.x"
+          functionAppName: "${{ env.FunctionAppName }}dev"
