@@ -32,7 +32,7 @@ jobs:
         with:
           credentials: ${{ secrets.credentials }}
           deploymentName: ${{ github.run_number }}-${{ inputs.functionAppName }}
-          environmentName: ${{inputs.environment}}
+          environmentName: ${{ inputs.environment }}
           resourceGroupName: ${{ inputs.resourceGroupName }}
           functionAppName: ${{ inputs.functionAppName }}
           location: ${{ inputs.location }}
