@@ -58,8 +58,7 @@ jobs:
         uses: Cheranga/GitHubActions/functionappsettings@master
         with:
           deploymentName: ${{ github.run_number }}-update-functionapp-settings
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          location: ${{env.ResourceGroupLocation}}
+          resourceGroupName: ${{ env.ResourceGroupName }}          
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           functionAppName: ${{ env.FunctionAppName }}dev
           appSettings: ${{ secrets.APP_SETTINGS }}
