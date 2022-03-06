@@ -74,13 +74,13 @@ jobs:
   #         secretData: ${{secrets.SECRET_DATA}}
 
   provisionresources:    
-    uses: Cheranga/Demo.Serverless.Hotels/.github/workflows/provisionresources.yml@feature/steps_with_custom_actions    
+    uses: ./provisionresources.yml
     with:      
-      environmentName: 'dev'
-      functionAppName: ${{ env.FunctionAppName }}
-      resourceGroupName: ${{ env.ResourceGroupName }}
-      location: ${{ env.ResourceGroupLocation }}
-      category: 'nonprod'
+      environmentName: dev
+      functionAppName: ccfunkyhotels
+      resourceGroupName: rg-cc-funky-hotels-dev
+      location: australiasoutheast
+      category: nonprod
     secrets:
       credentials: ${{ secrets.AZURE_CREDENTIALS }}
   # functionappdeployment:
