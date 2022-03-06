@@ -74,7 +74,7 @@ jobs:
   #         secretData: ${{secrets.SECRET_DATA}}
 
   provisionresources:    
-    uses: ./provisionresources.yml
+    uses: ./github.workflows/provisionresources.yml
     with:      
       environmentName: dev
       functionAppName: ccfunkyhotels
