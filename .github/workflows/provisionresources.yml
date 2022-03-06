@@ -43,7 +43,7 @@ jobs:
     needs: provisionresources
     runs-on: ubuntu-latest
     env:
-      queues: "hotel-cancellations"
+      queues: hotel-cancellations
     steps:
       - name: "storage account with queue"
         uses: Cheranga/GitHubActions/storageaccount@master
@@ -54,4 +54,4 @@ jobs:
           name: sg${{ inputs.functionAppName }}${{inputs.environment}}
           location: ${{inputs.location}}
           storageType: nonprod
-          queues: ${{ env.queues }}          
+          queues: ${{ env.queues }}
