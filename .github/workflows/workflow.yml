@@ -73,7 +73,7 @@ jobs:
   #         location: ${{ env.ResourceGroupLocation }}
   #         secretData: ${{secrets.SECRET_DATA}}
 
-  lint:
+  provisionresources:
     uses: Cheranga/Demo.Serverless.Hotels/.github/workflows/provisionresources.yml@feature/steps_with_custom_actions
     with:
       environmentName: dev
