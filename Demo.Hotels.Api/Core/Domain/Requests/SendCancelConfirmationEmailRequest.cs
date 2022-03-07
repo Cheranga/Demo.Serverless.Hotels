@@ -1,6 +1,4 @@
-using Demo.Hotels.Api.Core;
-
-namespace Demo.Hotels.Api.DTO.Requests
+namespace Demo.Hotels.Api.Core.Domain.Requests
 {
     public class SendCancelConfirmationEmailRequest : IOperation
     {

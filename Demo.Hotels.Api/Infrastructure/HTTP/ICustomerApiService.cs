@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Demo.Hotels.Api.Config;
-using Demo.Hotels.Api.Constants;
 using Demo.Hotels.Api.Core;
-using Demo.Hotels.Api.DTO.Requests;
-using Demo.Hotels.Api.DTO.Responses;
+using Demo.Hotels.Api.Core.Domain.Requests;
+using Demo.Hotels.Api.Core.Domain.Responses;
+using Demo.Hotels.Api.Infrastructure.Config;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Demo.Hotels.Api.Services
+namespace Demo.Hotels.Api.Infrastructure.HTTP
 {
     public interface ICustomerApiService
     {

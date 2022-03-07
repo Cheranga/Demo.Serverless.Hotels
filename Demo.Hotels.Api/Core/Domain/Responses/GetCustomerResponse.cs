@@ -1,7 +1,4 @@
-﻿using System.Net.Sockets;
-using Demo.Hotels.Api.Core;
-
-namespace Demo.Hotels.Api.DTO.Responses
+﻿namespace Demo.Hotels.Api.Core.Domain.Responses
 {
     public class GetCustomerResponse
     {

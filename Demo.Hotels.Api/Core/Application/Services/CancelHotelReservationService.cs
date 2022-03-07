@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Demo.Hotels.Api.Core;
-using Demo.Hotels.Api.DataAccess;
-using Demo.Hotels.Api.DTO.Messages;
-using Demo.Hotels.Api.DTO.Requests;
-using Demo.Hotels.Api.DTO.Responses;
+using Demo.Hotels.Api.Core.Domain.Messages;
+using Demo.Hotels.Api.Core.Domain.Requests;
+using Demo.Hotels.Api.Core.Domain.Responses;
+using Demo.Hotels.Api.Infrastructure.DataAccess;
+using Demo.Hotels.Api.Infrastructure.HTTP;
 using Microsoft.Extensions.Logging;
 
-namespace Demo.Hotels.Api.Services
+namespace Demo.Hotels.Api.Core.Application.Services
 {
     public class CancelHotelReservationService : ICancelHotelReservationService
     {

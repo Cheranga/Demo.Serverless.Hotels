@@ -25,4 +25,8 @@
     <Compile Remove="Application\CustomerService.cs" />
     <Compile Remove="Application\ICustomerService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Application\DTO" />
+    <Folder Include="Core\Domain" />
+  </ItemGroup>
 </Project>

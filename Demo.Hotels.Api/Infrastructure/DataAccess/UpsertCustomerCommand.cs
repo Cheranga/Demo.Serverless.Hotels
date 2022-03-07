@@ -1,6 +1,6 @@
 ﻿using Demo.Hotels.Api.Core;
 
-namespace Demo.Hotels.Api.DataAccess
+namespace Demo.Hotels.Api.Infrastructure.DataAccess
 {
     public class UpsertCustomerCommand : IOperation, ICommand
     {

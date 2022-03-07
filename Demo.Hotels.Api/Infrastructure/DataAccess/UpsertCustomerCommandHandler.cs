@@ -2,7 +2,7 @@
 using Demo.Hotels.Api.Core;
 using Microsoft.Extensions.Logging;
 
-namespace Demo.Hotels.Api.DataAccess
+namespace Demo.Hotels.Api.Infrastructure.DataAccess
 {
     public class UpsertCustomerCommandHandler : ICommandHandler<UpsertCustomerCommand>
     {

@@ -1,10 +1,12 @@
 ﻿using Azure.Identity;
 using Demo.Hotels.Api;
-using Demo.Hotels.Api.Config;
-using Demo.Hotels.Api.DataAccess;
+using Demo.Hotels.Api.Core;
+using Demo.Hotels.Api.Core.Application.Services;
 using Demo.Hotels.Api.Functions;
-using Demo.Hotels.Api.Services;
-using Demo.Hotels.Api.Validators;
+using Demo.Hotels.Api.Infrastructure;
+using Demo.Hotels.Api.Infrastructure.Config;
+using Demo.Hotels.Api.Infrastructure.DataAccess;
+using Demo.Hotels.Api.Infrastructure.HTTP;
 using FluentValidation;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Bindings;

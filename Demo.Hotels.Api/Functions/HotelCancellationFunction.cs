@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Demo.Hotels.Api.DTO.Messages;
-using Demo.Hotels.Api.Services;
+using Demo.Hotels.Api.Core.Application.Services;
+using Demo.Hotels.Api.Core.Domain.Messages;
 using FluentValidation;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;

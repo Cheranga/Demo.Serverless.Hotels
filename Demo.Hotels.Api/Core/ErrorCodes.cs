@@ -1,4 +1,4 @@
-﻿namespace Demo.Hotels.Api.Constants
+﻿namespace Demo.Hotels.Api.Core
 {
     public class ErrorCodes
     {

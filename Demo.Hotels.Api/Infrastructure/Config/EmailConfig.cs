@@ -1,4 +1,4 @@
-﻿namespace Demo.Hotels.Api.Config
+﻿namespace Demo.Hotels.Api.Infrastructure.Config
 {
     public class EmailConfig
     {

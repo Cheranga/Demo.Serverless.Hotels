@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace Demo.Hotels.Api.Validators
+namespace Demo.Hotels.Api.Core
 {
     public abstract class ModelValidatorBase<T> : AbstractValidator<T>
     {

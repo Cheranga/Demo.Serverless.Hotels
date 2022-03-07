@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Demo.Hotels.Api.Core;
-using Demo.Hotels.Api.DTO.Requests;
-using Demo.Hotels.Api.DTO.Responses;
+using Demo.Hotels.Api.Core.Domain.Requests;
+using Demo.Hotels.Api.Core.Domain.Responses;
 using Microsoft.Extensions.Logging;
 
-namespace Demo.Hotels.Api.Services
+namespace Demo.Hotels.Api.Infrastructure.HTTP
 {
     public interface IEmailService
     {
