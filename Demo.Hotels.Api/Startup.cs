@@ -1,5 +1,6 @@
 ﻿using Azure.Identity;
 using Demo.Hotels.Api;
+using Demo.Hotels.Api.Config;
 using Demo.Hotels.Api.DataAccess;
 using Demo.Hotels.Api.Functions;
 using Demo.Hotels.Api.Services;
@@ -35,6 +36,12 @@ namespace Demo.Hotels.Api
 
         private void RegisterConfigurations(IServiceCollection services, IConfigurationRoot configuration)
         {
+            services.Configure<EmailConfig>(configuration.GetSection(nameof(EmailConfig)));
+            services.AddSingleton(provider =>
+            {
+                var config = provider.GetRequiredService<IOptionsSnapshot<EmailConfig>>().Value;
+                return config;
+            });
         }
 
         private void RegisterAuthClients(IServiceCollection services, IConfigurationRoot configuration)

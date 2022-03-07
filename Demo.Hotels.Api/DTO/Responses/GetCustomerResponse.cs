@@ -9,7 +9,6 @@ namespace Demo.Hotels.Api.DTO.Responses
         public string UserName { get; set; }
         public string Email { get; set; }
         public Address Address { get; set; }
-        public string CorrelationId { get; set; }
     }
 
     public class Address

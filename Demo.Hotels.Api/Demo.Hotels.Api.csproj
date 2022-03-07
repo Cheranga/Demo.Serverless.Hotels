@@ -21,10 +21,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Application" />
-    <Folder Include="Configs" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Functions\GetCustomerFunction.cs" />
     <Compile Remove="Application\CustomerService.cs" />
     <Compile Remove="Application\ICustomerService.cs" />
