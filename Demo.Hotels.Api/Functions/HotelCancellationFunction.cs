@@ -1,27 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using Azure.Storage.Queues.Models;
-using Demo.Hotels.Api.Core;
 using Demo.Hotels.Api.DTO.Messages;
+using Demo.Hotels.Api.Services;
 using FluentValidation;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
 namespace Demo.Hotels.Api.Functions
 {
-    public interface ICancelHotelReservationService
-    {
-        Task<Result> CancelAsync(CancelHotelReservationMessage request);
-    }
-    
-    public class CancelHotelReservationService : ICancelHotelReservationService
-    {
-        public Task<Result> CancelAsync(CancelHotelReservationMessage request)
-        {
-            return Task.FromResult(Result.Success());
-        }
-    }
-
     public class HotelCancellationFunction
     {
         private readonly IValidator<CancelHotelReservationMessage> _validator;
@@ -35,7 +21,7 @@ namespace Demo.Hotels.Api.Functions
             _logger = logger;
         }
         
-        [FunctionName("HotelCancellationFunction")]
+        [FunctionName(nameof(HotelCancellationFunction))]
         public async Task Run([QueueTrigger("%HotelCancellationQueue%", Connection = "QueueSource")]CancelHotelReservationMessage message)
         {
             var validationResult = await _validator.ValidateAsync(message);

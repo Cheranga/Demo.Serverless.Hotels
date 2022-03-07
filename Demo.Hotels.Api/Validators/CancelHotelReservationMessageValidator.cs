@@ -9,7 +9,7 @@ namespace Demo.Hotels.Api.Validators
         {
             RuleFor(x => x.CorrelationId).NotNull().NotEmpty();
             RuleFor(x => x.ReservationId).NotNull().NotEmpty();
-            RuleFor(x => x.UserId).InclusiveBetween(1, 10);
+            RuleFor(x => x.UserId).GreaterThanOrEqualTo(1);
         }
     }
 }

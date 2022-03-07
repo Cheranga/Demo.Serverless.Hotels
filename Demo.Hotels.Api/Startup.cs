@@ -1,6 +1,8 @@
 ﻿using Azure.Identity;
 using Demo.Hotels.Api;
+using Demo.Hotels.Api.DataAccess;
 using Demo.Hotels.Api.Functions;
+using Demo.Hotels.Api.Services;
 using Demo.Hotels.Api.Validators;
 using FluentValidation;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
@@ -55,6 +57,9 @@ namespace Demo.Hotels.Api
             // services.AddSingleton<ICustomerService, CustomerService>();
 
             services.AddSingleton<ICancelHotelReservationService, CancelHotelReservationService>();
+            services.AddHttpClient<ICustomerApiService, CustomerApiService>();
+            services.AddSingleton<ICommandHandler<UpsertCustomerCommand>, UpsertCustomerCommandHandler>();
+            services.AddSingleton<IEmailService, EmailService>();
         }
         
         protected virtual IConfigurationRoot GetConfiguration(IFunctionsHostBuilder builder)

@@ -1,12 +1,22 @@
-﻿using Demo.Hotels.Api.Core;
+﻿using System.Net.Sockets;
+using Demo.Hotels.Api.Core;
 
 namespace Demo.Hotels.Api.DTO.Responses
 {
-    public class GetCustomerResponse : IOperation
+    public class GetCustomerResponse
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
+        public string Name { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public Address Address { get; set; }
         public string CorrelationId { get; set; }
+    }
+
+    public class Address
+    {
+        public string Street { get; set; }
+        public string Suite { get; set; }
+        public string City { get; set; }
+        public string ZipCode { get; set; }
     }
 }
