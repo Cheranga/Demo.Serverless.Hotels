@@ -1,6 +1,8 @@
 ﻿using Azure.Identity;
 using Demo.Hotels.Api;
-using Demo.Hotels.Api.Application;
+using Demo.Hotels.Api.Functions;
+using Demo.Hotels.Api.Validators;
+using FluentValidation;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Azure;
@@ -18,9 +20,15 @@ namespace Demo.Hotels.Api
             var configuration = GetConfiguration(builder);
             var services = builder.Services;
 
+            RegisterValidators(services);
             RegisterConfigurations(services, configuration);
             RegisterServices(services);
             RegisterAuthClients(services, configuration);
+        }
+
+        private void RegisterValidators(IServiceCollection services)
+        {
+            services.AddValidatorsFromAssembly(typeof(ModelValidatorBase<>).Assembly);
         }
 
         private void RegisterConfigurations(IServiceCollection services, IConfigurationRoot configuration)
@@ -44,7 +52,9 @@ namespace Demo.Hotels.Api
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddSingleton<ICustomerService, CustomerService>();
+            // services.AddSingleton<ICustomerService, CustomerService>();
+
+            services.AddSingleton<ICancelHotelReservationService, CancelHotelReservationService>();
         }
         
         protected virtual IConfigurationRoot GetConfiguration(IFunctionsHostBuilder builder)

@@ -4,6 +4,7 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.6" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="5.0.0" />
@@ -19,6 +20,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Application" />
     <Folder Include="Configs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Functions\GetCustomerFunction.cs" />
+    <Compile Remove="Application\CustomerService.cs" />
+    <Compile Remove="Application\ICustomerService.cs" />
   </ItemGroup>
 </Project>
