@@ -1,4 +1,4 @@
-﻿namespace Demo.Hotels.Api.Core.Domain.Responses
+﻿namespace Demo.Hotels.Api.Infrastructure.Email
 {
     public class SendCancelConfirmationEmailResponse
     {

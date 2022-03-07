@@ -1,4 +1,4 @@
-﻿namespace Demo.Hotels.Api.Core.Domain.Messages
+﻿namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class CancelHotelReservationMessage
     {

@@ -1,7 +1,7 @@
-using Demo.Hotels.Api.Core.Domain.Messages;
+using Demo.Hotels.Api.Core;
 using FluentValidation;
 
-namespace Demo.Hotels.Api.Core.Application.Validators
+namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class CancelHotelReservationMessageValidator : ModelValidatorBase<CancelHotelReservationMessage>
     {

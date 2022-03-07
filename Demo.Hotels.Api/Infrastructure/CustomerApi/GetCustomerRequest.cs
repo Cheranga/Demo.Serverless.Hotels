@@ -1,4 +1,6 @@
-﻿namespace Demo.Hotels.Api.Core.Domain.Requests
+﻿using Demo.Hotels.Api.Core;
+
+namespace Demo.Hotels.Api.Infrastructure.CustomerApi
 {
     public class GetCustomerRequest : IOperation
     {

@@ -2,7 +2,7 @@
 
 namespace Demo.Hotels.Api.Infrastructure.DataAccess
 {
-    public class UpsertCustomerCommand : IOperation, ICommand
+    public class CancelReservationCommand : IOperation, ICommand
     {
         public string CorrelationId { get; set; }
 

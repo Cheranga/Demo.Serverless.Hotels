@@ -3,9 +3,6 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Demo.Hotels.Api.Application;
-using Demo.Hotels.Api.DTO.Requests;
-using Demo.Hotels.Api.DTO.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -14,7 +11,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace Demo.Hotels.Api.Functions
+namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class GetCustomerFunction
     {

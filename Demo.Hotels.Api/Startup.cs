@@ -1,12 +1,11 @@
 ﻿using Azure.Identity;
 using Demo.Hotels.Api;
 using Demo.Hotels.Api.Core;
-using Demo.Hotels.Api.Core.Application.Services;
-using Demo.Hotels.Api.Functions;
+using Demo.Hotels.Api.Features.CancelReservation;
 using Demo.Hotels.Api.Infrastructure;
-using Demo.Hotels.Api.Infrastructure.Config;
+using Demo.Hotels.Api.Infrastructure.CustomerApi;
 using Demo.Hotels.Api.Infrastructure.DataAccess;
-using Demo.Hotels.Api.Infrastructure.HTTP;
+using Demo.Hotels.Api.Infrastructure.Email;
 using FluentValidation;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -67,7 +66,7 @@ namespace Demo.Hotels.Api
 
             services.AddSingleton<ICancelHotelReservationService, CancelHotelReservationService>();
             services.AddHttpClient<ICustomerApiService, CustomerApiService>();
-            services.AddSingleton<ICommandHandler<UpsertCustomerCommand>, UpsertCustomerCommandHandler>();
+            services.AddSingleton<ICommandHandler<CancelReservationCommand>, CancelReservationCommandHandler>();
             services.AddSingleton<IEmailService, EmailService>();
         }
         

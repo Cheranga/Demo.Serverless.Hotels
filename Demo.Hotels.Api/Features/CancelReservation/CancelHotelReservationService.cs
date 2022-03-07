@@ -1,21 +1,20 @@
 ﻿using System.Threading.Tasks;
-using Demo.Hotels.Api.Core.Domain.Messages;
-using Demo.Hotels.Api.Core.Domain.Requests;
-using Demo.Hotels.Api.Core.Domain.Responses;
+using Demo.Hotels.Api.Core;
+using Demo.Hotels.Api.Infrastructure.CustomerApi;
 using Demo.Hotels.Api.Infrastructure.DataAccess;
-using Demo.Hotels.Api.Infrastructure.HTTP;
+using Demo.Hotels.Api.Infrastructure.Email;
 using Microsoft.Extensions.Logging;
 
-namespace Demo.Hotels.Api.Core.Application.Services
+namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class CancelHotelReservationService : ICancelHotelReservationService
     {
         private readonly ICustomerApiService _customerApiService;
-        private readonly ICommandHandler<UpsertCustomerCommand> _commandHandler;
+        private readonly ICommandHandler<CancelReservationCommand> _commandHandler;
         private readonly IEmailService _emailService;
         private readonly ILogger<CancelHotelReservationService> _logger;
 
-        public CancelHotelReservationService(ICustomerApiService customerApiService, ICommandHandler<UpsertCustomerCommand> commandHandler, IEmailService emailService, ILogger<CancelHotelReservationService> logger)
+        public CancelHotelReservationService(ICustomerApiService customerApiService, ICommandHandler<CancelReservationCommand> commandHandler, IEmailService emailService, ILogger<CancelHotelReservationService> logger)
         {
             _customerApiService = customerApiService;
             _commandHandler = commandHandler;
@@ -63,7 +62,7 @@ namespace Demo.Hotels.Api.Core.Application.Services
 
         private async Task<Result> SaveCustomerAsync(string correlationId, CancellationStatus status, GetCustomerResponse response)
         {
-            var command = new UpsertCustomerCommand
+            var command = new CancelReservationCommand
             {
                 CorrelationId = correlationId,
                 Name = response.Name,

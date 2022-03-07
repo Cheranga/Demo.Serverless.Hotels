@@ -24,9 +24,11 @@
     <Compile Remove="Functions\GetCustomerFunction.cs" />
     <Compile Remove="Application\CustomerService.cs" />
     <Compile Remove="Application\ICustomerService.cs" />
+    <Compile Remove="CancelReservation\GetCustomerFunction.cs" />
+    <Compile Remove="Features\CancelReservation\GetCustomerFunction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Application\DTO" />
-    <Folder Include="Core\Domain" />
+    <Folder Include="Features" />
+    <Folder Include="Infrastructure" />
   </ItemGroup>
 </Project>
