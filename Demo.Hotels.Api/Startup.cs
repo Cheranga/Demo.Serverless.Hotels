@@ -70,7 +70,7 @@ namespace Demo.Hotels.Api
                     ExcludeManagedIdentityCredential = false
                 }));
 
-                var tableUri = configuration.GetValue<string>("Values:TableConfig__tableServiceUri");
+                var tableUri = configuration.GetValue<string>("TableConfig__tableServiceUri");
                 
                 
                 builder.AddTableServiceClient(new Uri(tableUri)).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
