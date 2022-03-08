@@ -70,10 +70,13 @@ namespace Demo.Hotels.Api
                     ExcludeManagedIdentityCredential = false
                 }));
 
-                var tableUri = configuration.GetValue<string>("TableConfig__tableServiceUri");
+                var config = new TableConfig();
+                configuration.GetSection(nameof(TableConfig)).Bind(config);
+                
+                // var tableUri = configuration.GetValue<string>("TableConfig__tableServiceUri");
                 
                 
-                builder.AddTableServiceClient(new Uri(tableUri)).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                builder.AddTableServiceClient(new Uri(config.TableServiceUri)).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = true,
                     ExcludeAzurePowerShellCredential = true,
