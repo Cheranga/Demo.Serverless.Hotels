@@ -69,8 +69,11 @@ namespace Demo.Hotels.Api
                     ExcludeVisualStudioCredential = false,
                     ExcludeManagedIdentityCredential = false
                 }));
+
+                var tableUri = configuration.GetValue<string>("Values:TableConfig__tableServiceUri");
                 
-                builder.AddTableServiceClient(configuration.GetSection("TableConfig")).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                
+                builder.AddTableServiceClient(new Uri(tableUri)).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = true,
                     ExcludeAzurePowerShellCredential = true,

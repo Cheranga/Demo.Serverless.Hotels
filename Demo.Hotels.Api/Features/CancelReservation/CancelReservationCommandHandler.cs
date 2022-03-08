@@ -10,18 +10,20 @@ namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class CancelReservationCommandHandler : ICommandHandler<CancelReservationCommand>
     {
-        private readonly ITableStorageFactory _tableStorageFactory;
+        // private readonly ITableStorageFactory _tableStorageFactory;
+        private readonly TableServiceClient _serviceClient;
         private readonly ILogger<CancelReservationCommandHandler> _logger;
 
-        public CancelReservationCommandHandler(ITableStorageFactory tableStorageFactory, ILogger<CancelReservationCommandHandler> logger)
+        public CancelReservationCommandHandler(TableServiceClient serviceClient/*ITableStorageFactory tableStorageFactory*/, ILogger<CancelReservationCommandHandler> logger)
         {
-            _tableStorageFactory = tableStorageFactory;
+            // _tableStorageFactory = tableStorageFactory;
+            _serviceClient = serviceClient;
             _logger = logger;
         }
         
         public async Task<Result> ExecuteAsync(CancelReservationCommand command)
         {
-            var tableClient = _tableStorageFactory.GetTableClient("cancelledreservations");
+            var tableClient = _serviceClient.GetTableClient("cancelledreservations"); //_tableStorageFactory.GetTableClient("cancelledreservations");
             if (tableClient == null)
             {
                 return Result.Failure(ErrorCodes.TableClientNotFound, ErrorMessages.TableClientNotFound);
