@@ -69,6 +69,15 @@ namespace Demo.Hotels.Api
                     ExcludeVisualStudioCredential = false,
                     ExcludeManagedIdentityCredential = false
                 }));
+                
+                builder.AddTableServiceClient(configuration.GetSection("TableConfig")).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeAzurePowerShellCredential = true,
+                    ExcludeInteractiveBrowserCredential = true,
+                    ExcludeVisualStudioCredential = false,
+                    ExcludeManagedIdentityCredential = false
+                }));
             });
         }
 
