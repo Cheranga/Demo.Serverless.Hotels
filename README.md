@@ -82,6 +82,10 @@ In here we need to correctly set the name and the type of the child resources we
 [merging settings](http://blog.dotnetstudio.nl/posts/2021/04/merge-appsettings-with-bicep/)
 [GitHub Bicep Issue](https://github.com/Azure/bicep/issues/3058)
 
+* Different architecture approaches
+
+Clean and vertical slicing
+
 
 
 
