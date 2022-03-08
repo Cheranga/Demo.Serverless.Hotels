@@ -53,7 +53,7 @@ namespace Demo.Hotels.Api.Infrastructure.CustomerApi
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, "{CorrelationId}: error occurred when getting customer data: {CustomerId}", request.CustomerId);
+                _logger.LogError(exception, "{CorrelationId}: error occurred when getting customer data: {CustomerId}", request.CustomerId, request.CustomerId);
             }
 
             return Result<GetCustomerResponse>.Failure(ErrorCodes.ApiError, ErrorMessages.ApiError);
