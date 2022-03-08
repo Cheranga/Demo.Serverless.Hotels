@@ -15,7 +15,7 @@ env:
   ResourceGroupName: rg-cc-funky-hotels-dev
   ResourceGroupLocation: australiasoutheast
   queues: hotel-cancellations
-  isProd: github.ref == 'refs/heads/main'
+  isProd: ${{github.ref == 'refs/heads/main'}}
 
 jobs:
   pipeline:    
