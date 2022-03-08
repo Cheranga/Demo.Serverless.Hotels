@@ -10,27 +10,23 @@ namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class CancelReservationCommandHandler : ICommandHandler<CancelReservationCommand>
     {
-        // private readonly ITableStorageFactory _tableStorageFactory;
-        private readonly TableServiceClient _tableServiceClient;
+        private readonly ITableStorageFactory _tableStorageFactory;
         private readonly ILogger<CancelReservationCommandHandler> _logger;
 
-        public CancelReservationCommandHandler(TableServiceClient tableServiceClient, ILogger<CancelReservationCommandHandler> logger)
+        public CancelReservationCommandHandler(ITableStorageFactory tableStorageFactory, ILogger<CancelReservationCommandHandler> logger)
         {
-            // _tableStorageFactory = tableStorageFactory;
-            _tableServiceClient = tableServiceClient;
+            _tableStorageFactory = tableStorageFactory;
             _logger = logger;
         }
         
         public async Task<Result> ExecuteAsync(CancelReservationCommand command)
         {
-            // var tableClient = _tableStorageFactory.GetTableClient("cancelledreservations");
-            // if (tableClient == null)
-            // {
-            //     return Result.Failure(ErrorCodes.TableClientNotFound, ErrorMessages.TableClientNotFound);
-            // }
+            var tableClient = _tableStorageFactory.GetTableClient("cancelledreservations");
+            if (tableClient == null)
+            {
+                return Result.Failure(ErrorCodes.TableClientNotFound, ErrorMessages.TableClientNotFound);
+            }
 
-            var tableClient = _tableServiceClient.GetTableClient("cancelledreservations");
-            
             var partitionKey = command.Status.ToString().ToUpper();
             var rowKey = command.ReservationId.ToUpper();
             var entity = new TableEntity(partitionKey, rowKey)
