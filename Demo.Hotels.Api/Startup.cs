@@ -73,8 +73,6 @@ namespace Demo.Hotels.Api
                 var config = new TableConfig();
                 configuration.GetSection(nameof(TableConfig)).Bind(config);
                 
-                // var tableUri = configuration.GetValue<string>("TableConfig__tableServiceUri");
-                
                 
                 builder.AddTableServiceClient(new Uri(config.TableServiceUri)).WithCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
@@ -89,33 +87,10 @@ namespace Demo.Hotels.Api
 
         private void RegisterServices(IServiceCollection services)
         {
-            // services.AddSingleton<ICustomerService, CustomerService>();
-
             services.AddSingleton<ICancelHotelReservationService, CancelHotelReservationService>();
             services.AddHttpClient<ICustomerApiService, CustomerApiService>();
             services.AddSingleton<ICommandHandler<CancelReservationCommand>, CancelReservationCommandHandler>();
             services.AddSingleton<IEmailService, EmailService>();
-
-            services.AddSingleton<ITableStorageFactory>(provider =>
-            {
-                var config = provider.GetRequiredService<TableConfig>();
-                var tableNames = config.TableNames;
-                var tables = tableNames.Split(",", StringSplitOptions.RemoveEmptyEntries);
-
-                var mappedTables = new Dictionary<string, TableClient>();
-                foreach (var tableName in tables)
-                {
-                    if (!mappedTables.ContainsKey(tableName))
-                    {
-                        var tableClient = new TableClient(new Uri(config.TableServiceUri), tableName, new DefaultAzureCredential());
-                        tableClient.CreateIfNotExists();
-
-                        mappedTables.Add(tableName.ToUpper(), tableClient);
-                    }
-                }
-
-                return new TableStorageFactory(mappedTables);
-            });
         }
         
         protected virtual IConfigurationRoot GetConfiguration(IFunctionsHostBuilder builder)

@@ -10,20 +10,19 @@ namespace Demo.Hotels.Api.Features.CancelReservation
 {
     public class CancelReservationCommandHandler : ICommandHandler<CancelReservationCommand>
     {
-        // private readonly ITableStorageFactory _tableStorageFactory;
+        private const string CancelledReservationsTable = "cancelledreservations";
         private readonly TableServiceClient _serviceClient;
         private readonly ILogger<CancelReservationCommandHandler> _logger;
 
-        public CancelReservationCommandHandler(TableServiceClient serviceClient/*ITableStorageFactory tableStorageFactory*/, ILogger<CancelReservationCommandHandler> logger)
+        public CancelReservationCommandHandler(TableServiceClient serviceClient, ILogger<CancelReservationCommandHandler> logger)
         {
-            // _tableStorageFactory = tableStorageFactory;
             _serviceClient = serviceClient;
             _logger = logger;
         }
         
         public async Task<Result> ExecuteAsync(CancelReservationCommand command)
         {
-            var tableClient = _serviceClient.GetTableClient("cancelledreservations"); //_tableStorageFactory.GetTableClient("cancelledreservations");
+            var tableClient = _serviceClient.GetTableClient(CancelledReservationsTable);
             if (tableClient == null)
             {
                 return Result.Failure(ErrorCodes.TableClientNotFound, ErrorMessages.TableClientNotFound);
@@ -46,37 +45,6 @@ namespace Demo.Hotels.Api.Features.CancelReservation
             }
 
             return Result.Success();
-        }
-    }
-
-    public interface ITableStorageFactory
-    {
-        TableClient GetTableClient(string tableName);
-    }
-
-    public class TableStorageFactory : ITableStorageFactory
-    {
-        private readonly IDictionary<string, TableClient> _tableClientsMappedByTable;
-        
-        public TableStorageFactory(IDictionary<string, TableClient> tableClientsMappedByTable)
-        {
-            _tableClientsMappedByTable = tableClientsMappedByTable;
-        }
-        public TableClient GetTableClient(string tableName)
-        {
-            if (string.IsNullOrWhiteSpace(tableName))
-            {
-                return null;
-            }
-
-            tableName = tableName.Trim().ToUpper();
-
-            if (_tableClientsMappedByTable.TryGetValue(tableName, out var tableClient))
-            {
-                return tableClient;
-            }
-
-            return null;
         }
     }
 }
