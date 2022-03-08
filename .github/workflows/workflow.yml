@@ -22,7 +22,7 @@ jobs:
     name: CI/CD Pipeline
     runs-on: ubuntu-latest
     steps:
-      - if: ${{env.isProd == true}}
+      - if: env.isProd
         name: Provision Azure resources for a vanilla function app
         uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
