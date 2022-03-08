@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Demo.Hotels.Api.Core;
 using Demo.Hotels.Api.Infrastructure.DataAccess;
 using Microsoft.Extensions.Logging;

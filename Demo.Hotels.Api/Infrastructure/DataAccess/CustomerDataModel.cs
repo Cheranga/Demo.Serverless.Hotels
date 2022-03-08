@@ -1,8 +1,10 @@
-﻿namespace Demo.Hotels.Api.Infrastructure.DataAccess
+﻿using Microsoft.WindowsAzure.Storage.Table;
+
+namespace Demo.Hotels.Api.Infrastructure.DataAccess
 {
     public class CustomerDataModel
     {
-        public string PartitionKey { get; set; }
+        
         
     }
 }
