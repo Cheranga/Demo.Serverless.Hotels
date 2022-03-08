@@ -101,7 +101,7 @@ namespace Demo.Hotels.Api
                 {
                     if (!mappedTables.ContainsKey(tableName))
                     {
-                        var tableClient = new TableClient(config.TableServiceUri, tableName);
+                        var tableClient = new TableClient(new Uri(config.TableServiceUri), tableName, new DefaultAzureCredential());
                         tableClient.CreateIfNotExists();
 
                         mappedTables.Add(tableName.ToUpper(), tableClient);
