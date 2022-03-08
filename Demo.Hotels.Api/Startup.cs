@@ -1,4 +1,8 @@
-﻿using Azure.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Data.Tables;
+using Azure.Identity;
 using Demo.Hotels.Api;
 using Demo.Hotels.Api.Core;
 using Demo.Hotels.Api.Features.CancelReservation;
@@ -38,9 +42,17 @@ namespace Demo.Hotels.Api
         private void RegisterConfigurations(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.Configure<EmailConfig>(configuration.GetSection(nameof(EmailConfig)));
+            services.Configure<TableConfig>(configuration.GetSection(nameof(TableConfig)));
+
             services.AddSingleton(provider =>
             {
                 var config = provider.GetRequiredService<IOptionsSnapshot<EmailConfig>>().Value;
+                return config;
+            });
+            
+            services.AddSingleton(provider =>
+            {
+                var config = provider.GetRequiredService<IOptionsSnapshot<TableConfig>>().Value;
                 return config;
             });
         }
@@ -68,6 +80,27 @@ namespace Demo.Hotels.Api
             services.AddHttpClient<ICustomerApiService, CustomerApiService>();
             services.AddSingleton<ICommandHandler<CancelReservationCommand>, CancelReservationCommandHandler>();
             services.AddSingleton<IEmailService, EmailService>();
+
+            services.AddSingleton<ITableStorageFactory>(provider =>
+            {
+                var config = provider.GetRequiredService<TableConfig>();
+                var tableNames = config.TableNames;
+                var tables = tableNames.Split(",", StringSplitOptions.RemoveEmptyEntries);
+
+                var mappedTables = new Dictionary<string, TableClient>();
+                foreach (var tableName in tables)
+                {
+                    if (!mappedTables.ContainsKey(tableName))
+                    {
+                        var tableClient = new TableClient(config.TableServiceUri, tableName);
+                        tableClient.CreateIfNotExists();
+
+                        mappedTables.Add(tableName.ToUpper(), tableClient);
+                    }
+                }
+
+                return new TableStorageFactory(mappedTables);
+            });
         }
         
         protected virtual IConfigurationRoot GetConfiguration(IFunctionsHostBuilder builder)

@@ -31,9 +31,9 @@ jobs:
           functionAppName: ${{ env.FunctionAppName }}
           location: ${{ env.ResourceGroupLocation }}
           category: nonprod
-      
+
       - name: Create storage queue
-        uses: Cheranga/GitHubActions/storageaccount@master          
+        uses: Cheranga/GitHubActions/storageaccount@master
         with:
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           deploymentName: ${{ github.run_number }}-storage-account-updates
@@ -42,23 +42,34 @@ jobs:
           location: ${{env.ResourceGroupLocation}}
           storageType: nonprod
           queues: ${{ env.queues }}
-  
+
       - name: Provide function app to access queue based on RBAC
         uses: Cheranga/GitHubActions/assignrbactostorage@master
         with:
-          deploymentName: ${{ github.run_number }}-assign-rbac
+          deploymentName: ${{ github.run_number }}-assign-queue-rbac
+          resourceGroupName: ${{ env.ResourceGroupName }}
+          credentials: ${{secrets.AZURE_CREDENTIALS}}
+          storageAccountName: sg${{ env.FunctionAppName }}dev
+          accessibility: table_write
+          friendlyName: ${{ env.FunctionAppName }}
+          functionAppName: ${{ env.FunctionAppName }}dev
+
+      - name: Provide function app to access table based on RBAC
+        uses: Cheranga/GitHubActions/assignrbactostorage@master
+        with:
+          deploymentName: ${{ github.run_number }}-assign-table-rbac
           resourceGroupName: ${{ env.ResourceGroupName }}
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           storageAccountName: sg${{ env.FunctionAppName }}dev
           accessibility: queue_read_write
           friendlyName: ${{ env.FunctionAppName }}
-          functionAppName: ${{ env.FunctionAppName }}dev
-  
+          functionAppName: ${{ env.FunctionAppName }}dev          
+
       - name: Update function app settings
         uses: Cheranga/GitHubActions/functionappsettings@master
         with:
           deploymentName: ${{ github.run_number }}-update-functionapp-settings
-          resourceGroupName: ${{ env.ResourceGroupName }}          
+          resourceGroupName: ${{ env.ResourceGroupName }}
           credentials: ${{secrets.AZURE_CREDENTIALS}}
           functionAppName: ${{ env.FunctionAppName }}dev
           appSettings: ${{ secrets.APP_SETTINGS }}

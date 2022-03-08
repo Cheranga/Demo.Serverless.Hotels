@@ -30,7 +30,7 @@ namespace Demo.Hotels.Api.Features.CancelReservation
                 return Result.Failure(getCustomerOperation.ErrorCode, getCustomerOperation.ErrorMessage);
             }
 
-            var saveCustomerOperation = await SaveCustomerAsync(request.CorrelationId, CancellationStatus.Received, getCustomerOperation.Data);
+            var saveCustomerOperation = await SaveCustomerAsync(request, CancellationStatus.Received, getCustomerOperation.Data);
             if (!saveCustomerOperation.Status)
             {
                 return saveCustomerOperation;
@@ -42,7 +42,7 @@ namespace Demo.Hotels.Api.Features.CancelReservation
                 return Result.Failure(sendEmailOperation.ErrorCode, sendEmailOperation.ErrorMessage);
             }
 
-            saveCustomerOperation = await SaveCustomerAsync(request.CorrelationId, CancellationStatus.Confirmed, getCustomerOperation.Data);
+            saveCustomerOperation = await SaveCustomerAsync(request, CancellationStatus.Confirmed, getCustomerOperation.Data);
             return saveCustomerOperation;
         }
 
@@ -60,11 +60,12 @@ namespace Demo.Hotels.Api.Features.CancelReservation
             return operation;
         }
 
-        private async Task<Result> SaveCustomerAsync(string correlationId, CancellationStatus status, GetCustomerResponse response)
+        private async Task<Result> SaveCustomerAsync(CancelHotelReservationMessage message, CancellationStatus status, GetCustomerResponse response)
         {
             var command = new CancelReservationCommand
             {
-                CorrelationId = correlationId,
+                CorrelationId = message.CorrelationId,
+                ReservationId = message.ReservationId,
                 Name = response.Name,
                 Email = response.Email,
                 UserName = response.UserName,
