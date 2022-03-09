@@ -15,15 +15,13 @@ env:
   ResourceGroupName: rg-cc-funky-hotels-dev
   ResourceGroupLocation: australiasoutheast
   queues: hotel-cancellations
-  isProd: ${{github.ref == 'refs/heads/main'}}
 
 jobs:
-  pipeline:    
+  pipeline:
     name: CI/CD Pipeline
     runs-on: ubuntu-latest
     steps:
-      - if: env.isProd
-        name: Provision Azure resources for a vanilla function app
+      - name: Provision Azure resources for a vanilla function app
         uses: Cheranga/GitHubActions/vanillafunctionapp@master
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
